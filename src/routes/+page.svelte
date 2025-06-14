@@ -2,10 +2,17 @@
 	import { base } from '$app/paths';
 </script>
 
+<h2>About</h2>
+
 <p>
-	Certifictate tools that running locally in the web browser using the Web Crypto API and libaries
-	like @peculiar/x509 and node-forge.
+	This site offers a collection of dev tools to create and analyze certificates, CSRs, PKCS#12 files
+	and more. Everything runs locally in your web browser using the Web Crypto API and libraries like
+	@peculiar/x509 and node-forge. No data ever leaves your computer. The code of this site is open
+	source and available on
+	<a href="https://github.com/sbaeumlisberger/cert-tools">GitHub</a>.
 </p>
+
+<p>Get started:</p>
 
 <ul>
 	<li><a class="nav-item" href="{base}/csr">Create CSR</a></li>
