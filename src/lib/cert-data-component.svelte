@@ -90,10 +90,9 @@
 <span>Subject Name:</span>
 <input
 	type="text"
-	style="width: 200px"
+	style="width: 256px"
 	bind:value={subject}
-	placeholder="e.g. CN=Alice, C=Wonderland"
-/>
+	placeholder="e.g. CN=Alice, C=Wonderland" />
 <!-- TODO: Add link to https://datatracker.ietf.org/doc/html/rfc1779?-->
 
 <br /><br />

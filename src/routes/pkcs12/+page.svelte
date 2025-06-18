@@ -62,7 +62,7 @@
 		<span>Password:</span>
 		<input type="password" bind:value={password} />
 	</div>
-	<button onclick={viewPkcs12} disabled={!canView}> View selected file </button>
+	<button onclick={viewPkcs12} disabled={!canView}>Open selected file</button>
 </div>
 
 <br />
