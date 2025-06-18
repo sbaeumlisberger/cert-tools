@@ -97,11 +97,17 @@
 
 <br /><br />
 
-<textarea rows="20" cols="65" value={csr} readonly placeholder="CSR (PKCS#10) will appear here"
-></textarea>
 <textarea
 	rows="20"
 	cols="65"
+	class="monospace"
+	value={csr}
+	readonly
+	placeholder="CSR (PKCS#10) will appear here"></textarea>
+<textarea
+	rows="20"
+	cols="65"
+	class="monospace"
 	value={privateKey}
 	readonly
 	placeholder="Private key (PKCS#8) will appear here"></textarea>

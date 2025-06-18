@@ -129,12 +129,14 @@
 <textarea
 	rows="20"
 	cols="65"
+	class="monospace"
 	value={certificate}
 	readonly
 	placeholder="PEM encoded certificate will appear here"></textarea>
 <textarea
 	rows="20"
 	cols="65"
+	class="monospace"
 	value={privateKey}
 	readonly
 	placeholder="Private key (PKCS#8) will appear here"></textarea>

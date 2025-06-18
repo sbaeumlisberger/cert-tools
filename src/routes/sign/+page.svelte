@@ -39,6 +39,7 @@
 	<textarea
 		cols="65"
 		rows="20"
+		class="monospace"
 		bind:value={csrInput}
 		placeholder="Paste your PEM encoded CSR (PKCS#10) here">
 	</textarea>
@@ -47,6 +48,7 @@
 		<textarea
 			cols="65"
 			rows="20"
+			class="monospace"
 			bind:value={privateKeyInput}
 			placeholder="Paste your PEM encoded signing key (PKCS#8) here">
 		</textarea>
@@ -70,6 +72,7 @@
 <textarea
 	cols="65"
 	rows={(signedCertificate.match(/\n/g)?.length || 18) + 2}
+	class="monospace"
 	value={signedCertificate}
 	placeholder="Signed certificate will appear here"
 	readonly></textarea>

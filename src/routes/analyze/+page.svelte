@@ -42,7 +42,12 @@
 <h2>Analyze a CSR or Certificate</h2>
 
 <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
-	<textarea cols="65" rows="20" bind:value={input} placeholder="Paste your CSR or certificate here">
+	<textarea
+		cols="65"
+		rows="20"
+		class="monospace"
+		bind:value={input}
+		placeholder="Paste your CSR or certificate here">
 	</textarea>
 
 	<button onclick={parse}>Parse</button>
@@ -50,7 +55,7 @@
 	<textarea
 		cols="65"
 		rows={(parsed.match(/\n/g)?.length || 18) + 2}
-		style="white-space: pre;"
+		class="monospace"
 		value={parsed}
 		placeholder="Parsed output will appear here"
 		readonly></textarea>
