@@ -108,3 +108,8 @@ export async function saveFile(file: File) {
         a.click();
     }
 }
+
+export async function exportPrivateKeyAsPem(key: CryptoKey): Promise<string> {
+    const keyData = await crypto.subtle.exportKey('pkcs8', key);
+    return arrayBufferToPem(keyData, '-----BEGIN PRIVATE KEY-----', '-----END PRIVATE KEY-----');
+}

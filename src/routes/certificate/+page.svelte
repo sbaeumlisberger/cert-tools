@@ -1,13 +1,16 @@
 <script lang="ts">
 	import * as x509 from '@peculiar/x509';
-	import { arrayBufferToPem } from '$lib/utils';
+	import { exportPrivateKeyAsPem } from '$lib/utils';
 	import { CertData } from '$lib/cert-data';
 	import CertDataComponent from '$lib/cert-data-component.svelte';
+	import { LocalCa } from '$lib/local-ca';
 
 	let certificate: string = $state('');
 	let privateKey: string = $state('');
 
 	let certData: CertData = new CertData();
+
+	let useLocalCa: boolean = $state(false);
 
 	function onCertDataChanged(newCertData: CertData) {
 		certData = newCertData;
@@ -70,23 +73,50 @@
 			);
 		}
 
-		const x509Cert = await x509.X509CertificateGenerator.createSelfSigned({
-			signingAlgorithm: alg,
-			keys,
-			extensions: extensions
-		});
+		if (useLocalCa) {
+			const localCa = await LocalCa.create();
+			const x509Cert = await localCa.signCsr(
+				await x509.Pkcs10CertificateRequestGenerator.create({
+					name: certData.subject,
+					keys: keys,
+					signingAlgorithm: alg,
+					extensions: extensions
+				})
+			);
+			certificate = x509Cert.toString('pem') + '\n' + localCa.exportChain();
+		} else {
+			const x509Cert = await x509.X509CertificateGenerator.createSelfSigned({
+				signingAlgorithm: alg,
+				keys,
+				name: certData.subject,
+				extensions: extensions
+			});
+			certificate = x509Cert.toString('pem');
+		}
 
-		certificate = x509Cert.toString('pem');
-		privateKey = await exportPrivateKey(keys.privateKey);
-	}
-
-	async function exportPrivateKey(key: CryptoKey): Promise<string> {
-		const keyData = await crypto.subtle.exportKey('pkcs8', key);
-		return arrayBufferToPem(keyData, '-----BEGIN PRIVATE KEY-----', '-----END PRIVATE KEY-----');
+		privateKey = await exportPrivateKeyAsPem(keys.privateKey);
 	}
 </script>
 
-<h2>Create Certificate (self-signed)</h2>
+<h2>Create Certificate</h2>
+
+<div style="display: flex;">
+	<button
+		style="border-top-right-radius: 0; border-bottom-right-radius: 0; width: 128px;"
+		class:active={!useLocalCa}
+		onclick={() => (useLocalCa = false)}>
+		Self-signed
+	</button>
+	<button
+		style="border-top-left-radius: 0; border-bottom-left-radius: 0; width: 128px;"
+		class:active={useLocalCa}
+		onclick={() => (useLocalCa = true)}
+		title="Use a locally created CA to sign the certificate. The certificate chain will be included in the output.">
+		Local CA
+	</button>
+</div>
+
+<br />
 
 <CertDataComponent onchange={onCertDataChanged} />
 
@@ -108,3 +138,10 @@
 	value={privateKey}
 	readonly
 	placeholder="Private key (PKCS#8) will appear here"></textarea>
+
+<style>
+	button.active {
+		background-color: #007acc;
+		color: white;
+	}
+</style>

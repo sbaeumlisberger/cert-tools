@@ -72,7 +72,7 @@
 
 		const csrPkcs10 = await x509.Pkcs10CertificateRequestGenerator.create({
 			name: certData.subject,
-			keys,
+			keys: keys,
 			signingAlgorithm: alg,
 			extensions: extensions
 		});
