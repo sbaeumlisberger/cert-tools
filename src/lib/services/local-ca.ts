@@ -1,5 +1,5 @@
+import { exportPrivateKeyAsPem } from '$lib/utils/utils';
 import * as x509 from '@peculiar/x509';
-import { exportPrivateKeyAsPem, pemToArrayBuffer } from './utils';
 
 const KEY_ROOT_CA_CERT = 'root-ca-cert';
 const KEY_ROOT_CA_PRIVATE_KEY = 'root-ca-private-key';
@@ -31,11 +31,16 @@ export class LocalCa {
         let rootCa = await loadCa(KEY_ROOT_CA_CERT, KEY_ROOT_CA_PRIVATE_KEY);
         let issuingCa = await loadCa(KEY_ISSUING_CA_CERT, KEY_ISSUING_CA_PRIVATE_KEY);
 
-        if (rootCa === null || issuingCa === null) {
+        let newRootCa = false;
+
+        if (rootCa === null || rootCa.cert.notAfter < new Date()) {
             rootCa = await generateRootCa();
             localStorage.setItem(KEY_ROOT_CA_CERT, rootCa.cert.toString('pem'));
             localStorage.setItem(KEY_ROOT_CA_PRIVATE_KEY, await exportPrivateKeyAsPem(rootCa.privateKey));
+            newRootCa = true;
+        }
 
+        if (newRootCa || issuingCa === null || issuingCa.cert.notAfter < new Date()) {
             issuingCa = await generateIssuingCa(rootCa);
             localStorage.setItem(KEY_ISSUING_CA_CERT, issuingCa.cert.toString('pem'));
             localStorage.setItem(KEY_ISSUING_CA_PRIVATE_KEY, await exportPrivateKeyAsPem(issuingCa.privateKey));
@@ -88,7 +93,8 @@ async function generateRootCa(): Promise<Ca> {
             new x509.BasicConstraintsExtension(true, 0, true),
             new x509.SubjectAlternativeNameExtension([new x509.GeneralName('dns', name)]),
             new x509.KeyUsagesExtension(x509.KeyUsageFlags.digitalSignature | x509.KeyUsageFlags.keyCertSign | x509.KeyUsageFlags.cRLSign),
-        ]
+        ],
+        notAfter: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000), // 10 years
     });
     return { cert: cert, privateKey: keys.privateKey };
 }

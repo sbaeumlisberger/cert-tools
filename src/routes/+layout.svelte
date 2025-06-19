@@ -24,23 +24,24 @@
 
 <style>
 	.header {
-		background: lightblue;
+		background: var(--primary-color);
+		color: white;
 	}
 
 	.header-content {
-		max-width: 1200px;
+		max-width: 1240px;
 		margin: auto;
 		display: flex;
 		align-items: stretch;
 		justify-content: center;
-		column-gap: 32px;
-		padding-inline: 8px;
+		column-gap: 1rem;
+		padding-inline: 1rem;
 		flex-wrap: wrap;
 	}
 
 	.app-title-container {
 		align-self: center;
-		padding-block: 8px;
+		padding-block: 0.5rem;
 		text-decoration: none;
 		color: unset;
 	}
@@ -53,8 +54,8 @@
 	.app-subtitle {
 		width: 100%;
 		text-align: center;
-		opacity: 0.6;
-		margin-bottom: 8px;
+		opacity: 0.8;
+		margin-bottom: 0.5rem;
 	}
 
 	.nav {
@@ -74,7 +75,7 @@
 		align-content: center;
 		color: unset;
 		text-decoration: none;
-		padding: 8px;
+		padding: 0.5rem;
 	}
 
 	.nav-item:hover {
@@ -82,8 +83,9 @@
 	}
 
 	.content {
-		max-width: 1200px;
-		padding-inline: 8px;
+		max-width: 1240px;
+		padding-inline: 1rem;
+		padding-bottom: 1rem;
 		margin: auto;
 	}
 </style>

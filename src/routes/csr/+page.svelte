@@ -1,8 +1,9 @@
 <script lang="ts">
 	import * as x509 from '@peculiar/x509';
-	import { arrayBufferToPem } from '$lib/utils';
-	import { CertData } from '$lib/cert-data';
-	import CertDataComponent from '$lib/cert-data-component.svelte';
+	import { arrayBufferToPem } from '$lib/utils/utils';
+	import { CertData } from '$lib/models/cert-data';
+	import PemOutput from '$lib/components/pem-output.svelte';
+	import CertDataComponent from '$lib/components/cert-data-component.svelte';
 
 	let csr: string = $state('');
 	let privateKey: string = $state('');
@@ -89,25 +90,41 @@
 
 <h2>Create CSR</h2>
 
-<CertDataComponent onchange={onCertDataChanged} />
+<div class="page-container">
+	<div class="input-container">
+		<CertDataComponent onchange={onCertDataChanged} />
+		<button style="width: 100%;" onclick={generateCSR}>Generate CSR</button>
+	</div>
 
-<br />
+	<div class="output-container">
+		<PemOutput value={csr} placeholder="CSR (PKCS#10) will appear here" filename="csr.pem" />
+		<PemOutput
+			value={privateKey}
+			placeholder="Private key (PKCS#8) will appear here"
+			filename="private-key.pem" />
+	</div>
+</div>
 
-<button onclick={generateCSR}>Generate CSR</button>
+<style>
+	.page-container {
+		display: flex;
+		flex-direction: row;
+		gap: 2rem;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
 
-<br /><br />
+	.input-container {
+		flex: 0 1 512px;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
 
-<textarea
-	rows="20"
-	cols="65"
-	class="monospace"
-	value={csr}
-	readonly
-	placeholder="CSR (PKCS#10) will appear here"></textarea>
-<textarea
-	rows="20"
-	cols="65"
-	class="monospace"
-	value={privateKey}
-	readonly
-	placeholder="Private key (PKCS#8) will appear here"></textarea>
+	.output-container {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 1rem;
+	}
+</style>

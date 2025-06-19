@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { saveFile } from '$lib/utils';
+	import PemOutput from '$lib/components/pem-output.svelte';
+	import { saveFile } from '$lib/utils/utils';
 	import * as forge from 'node-forge';
 
 	let password: string = $state('');
@@ -56,7 +57,7 @@
 
 <h2>PKCS#12 Viewer</h2>
 
-<div style="display: flex; align-items: center; column-gap: 64px; row-gap: 16px; flex-wrap: wrap;">
+<div style="display: flex; align-items: center; column-gap: 4rem; row-gap: 1rem; flex-wrap: wrap;">
 	<input type="file" accept=".p12,.pfx" onchange={(e) => handleFileChange(e)} />
 	<div>
 		<span>Password:</span>
@@ -74,40 +75,18 @@
 				<tr>
 					<th>Entry</th>
 					<th>Private Key</th>
-					<th></th>
 					<th>Certificates</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each entries as entry}
 					<tr>
 						<td>{entry.name}</td>
-						<td style="padding-left: 16px;">
-							<textarea cols="65" rows="10" readonly>{entry.key}</textarea>
+						<td style="padding-left: 1rem;">
+							<PemOutput value={entry.key} filename={entry.name + '_key.pem'} />
 						</td>
-						<td>
-							<button
-								onclick={() => navigator.clipboard.writeText(entry.key)}
-								disabled={entry.key.length === 0}>Copy</button>
-							<br />
-							<button
-								style="margin-top: 4px;"
-								onclick={() => saveFile(new File([entry.key], entry.name + '_key.pem'))}
-								disabled={entry.key.length === 0}>Save</button>
-						</td>
-						<td style="padding-left: 16px;">
-							<textarea cols="65" rows="10" readonly>{entry.certs}</textarea>
-						</td>
-						<td>
-							<button
-								onclick={() => navigator.clipboard.writeText(entry.certs)}
-								disabled={entry.certs.length === 0}>Copy</button>
-							<br />
-							<button
-								style="margin-top: 4px;"
-								onclick={() => saveFile(new File([entry.certs], entry.name + '_certs.pem'))}
-								disabled={entry.certs.length === 0}>Save</button>
+						<td style="padding-left: 1rem;">
+							<PemOutput value={entry.certs} filename={entry.name + '_certs.pem'} />
 						</td>
 					</tr>
 				{/each}
@@ -123,5 +102,6 @@
 <style>
 	td {
 		vertical-align: top;
+		padding: 0 0 1rem 0;
 	}
 </style>

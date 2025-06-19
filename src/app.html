@@ -7,17 +7,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	%sveltekit.head%
 	<style>
-		body {
-			margin: 0;
-			font-family: system-ui, sans-serif;
+		:root {
+			--primary-color: #007bff;
+			--text-color: #1b1b1b;
 		}
 
 		* {
 			box-sizing: border-box;
 		}
 
+		body {
+			margin: 0;
+			font-family: system-ui, sans-serif;
+			color: var(--text-color);
+			accent-color: var(--primary-color);
+		}
+
 		button,
-		::file-selector-button,
+		input[type=file]::file-selector-button,
 		input,
 		select,
 		textarea {
@@ -28,11 +35,11 @@
 			border-radius: 4px;
 			box-sizing: border-box;
 			outline: none;
-			padding: 8px;
+			padding: 0.5rem;
 		}
 
 		button,
-		::file-selector-button {
+		input[type=file]::file-selector-button {
 			background-color: #f5f5f5;
 			cursor: pointer;
 		}
@@ -42,38 +49,41 @@
 		}
 
 		input[type=file]::file-selector-button {
-			margin-inline-end: 16px;
+			margin-inline-end: 2rem;
 		}
 
-		textarea {
-			max-width: 100%;
+		button:not(:disabled):hover,
+		input[type=file]:not(:disabled)::file-selector-button:hover {
+			background-color: #f0f0f0;
 		}
 
-		textarea:not(:placeholder-shown).monospace {
-			font-family: monospace;
-			white-space: pre;
+		input:not(:disabled):hover,
+		select:not(:disabled):hover,
+		textarea:not(:disabled):hover {
+			border-color: #999999;
 		}
 
-		button:hover,
-		::file-selector-button:hover,
-		input:hover,
-		select:hover,
-		textarea:hover {
-			border-color: #999;
+		button:not(:disabled):focus,
+		input[type=file]:not(:disabled)::file-selector-button:focus,
+		input:not(:disabled):focus,
+		select:not(:disabled):focus,
+		textarea:not(:disabled):focus {
+			border-color: var(--primary-color);
 		}
 
-		button:focus,
-		::file-selector-button:focus,
-		input:focus,
-		select:focus,
-		textarea:focus {
-			border-color: #007bff;
+		input[type=checkbox]:focus-visible {
+			outline: 1px solid var(--primary-color);
+			outline-offset: 1px;
 		}
 
-		*:disabled {
-			cursor: unset !important;
-			color: #ccc !important;
-			border-color: #ccc !important;
+		button:disabled,
+		input[type=file]:disabled::file-selector-button,
+		input:disabled,
+		select:disabled,
+		textarea:disabled {
+			cursor: unset;
+			color: #cccccc;
+			border-color: #cccccc;
 		}
 	</style>
 </head>

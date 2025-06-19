@@ -2,7 +2,9 @@
 	import * as x509 from '@peculiar/x509';
 	import * as pkijs from 'pkijs';
 	import * as asn1js from 'asn1js';
-	import { formatHex, getAlgorithmName, pemToArrayBuffer } from '$lib/utils';
+	import { formatHex, getAlgorithmName, pemToArrayBuffer } from '$lib/utils/utils';
+	import PemInput from '$lib/components/pem-input.svelte';
+	import PemOutput from '$lib/components/pem-output.svelte';
 
 	let input: string = $state('');
 	let parsed: string = $state('');
@@ -41,21 +43,15 @@
 
 <h2>Analyze a CSR or Certificate</h2>
 
-<div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
-	<textarea
-		cols="65"
-		rows="20"
-		class="monospace"
-		bind:value={input}
-		placeholder="Paste your CSR or certificate here">
-	</textarea>
+<div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
+	<PemInput bind:value={input} placeholder="Paste your CSR or certificate here" />
 
 	<button onclick={parse}>Parse</button>
 
 	<textarea
 		cols="65"
 		rows={(parsed.match(/\n/g)?.length || 18) + 2}
-		class="monospace"
+		style="min-width: 0; resize: none; font-family: monospace; white-space: pre;"
 		value={parsed}
 		placeholder="Parsed output will appear here"
 		readonly></textarea>
