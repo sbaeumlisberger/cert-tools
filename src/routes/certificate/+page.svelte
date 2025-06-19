@@ -106,13 +106,13 @@
 		<div style="display: flex;">
 			<button
 				style="border-top-right-radius: 0; border-bottom-right-radius: 0; width: 16rem;"
-				class:active={!useLocalCa}
+				class:g-active={!useLocalCa}
 				onclick={() => (useLocalCa = false)}>
 				Self-signed
 			</button>
 			<button
 				style="border-top-left-radius: 0; border-bottom-left-radius: 0; width: 16rem;"
-				class:active={useLocalCa}
+				class:g-active={useLocalCa}
 				onclick={() => (useLocalCa = true)}
 				title="Use a locally created CA to sign the certificate. The certificate chain will be included in the output.">
 				Local CA
@@ -154,9 +154,5 @@
 		min-width: 0;
 		flex-direction: column;
 		gap: 1rem;
-	}
-
-	button.active {
-		background-color: #dddddd;
 	}
 </style>

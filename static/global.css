@@ -1,0 +1,115 @@
+:root {
+	--background-color: #ffffff;
+	--primary-color: #007bff;
+	--text-color: #1b1b1b;
+	--button-background: #f5f5f5;
+	--button-background-hover: #f0f0f0;
+	--button-background-active: #dddddd;
+	--forms-border-color: #cccccc;
+	--forms-background-hover: #999999;
+	--disabled-color: #cccccc;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: #111111;
+		--text-color: #ffffff;
+		--button-background: #191919;
+		--button-background-hover: #222222;
+		--button-background-active: #333333;
+		--disabled-color: #555555;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: system-ui, sans-serif;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	accent-color: var(--primary-color);
+}
+
+button,
+input[type='file']::file-selector-button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+	background-color: transparent;
+	border: 1px solid var(--forms-border-color);
+	border-radius: 4px;
+	box-sizing: border-box;
+	outline: none;
+	padding: 0.5rem;
+}
+
+button,
+input[type='file']::file-selector-button {
+	background-color: var(--button-background);
+	cursor: pointer;
+}
+
+input[type='checkbox'] {
+	appearance: none;
+	padding: 0;
+	width: 1rem;
+	height: 1rem;
+	vertical-align: bottom;
+}
+
+input[type='checkbox']:checked {
+	background-color: var(--primary-color);
+	border-color: var(--primary-color);
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 13L9 17L19 7'/%3E%3C/svg%3E");
+}
+
+input[type='file'] {
+	border: dashed 1px;
+}
+
+input[type='file']::file-selector-button {
+	margin-inline-end: 2rem;
+}
+
+button:not(:disabled):hover,
+input[type='file']:not(:disabled)::file-selector-button:hover {
+	background-color: var(--button-background-hover);
+}
+
+input:not(:disabled):hover,
+select:not(:disabled):hover,
+textarea:not(:disabled):hover {
+	border-color: var(--forms-background-hover);
+}
+
+button:not(:disabled):focus,
+input[type='file']:not(:disabled)::file-selector-button:focus,
+input:not(:disabled):focus,
+select:not(:disabled):focus,
+textarea:not(:disabled):focus {
+	border-color: var(--primary-color);
+}
+
+input[type='checkbox']:focus-visible {
+	outline: 1px solid var(--primary-color);
+	outline-offset: 1px;
+}
+
+button:disabled,
+input[type='file']:disabled::file-selector-button,
+input:disabled,
+select:disabled,
+textarea:disabled {
+	cursor: unset;
+	color: var(--disabled-color);
+	border-color: var(--disabled-color);
+}
+
+button.g-active {
+	background-color: var(--button-background-active);
+}
