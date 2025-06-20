@@ -37,7 +37,7 @@
 
 <h2>Sign Certificate</h2>
 
-<div style="display: flex; align-items: start; gap: 2rem; flex-wrap: wrap;">
+<div style="display: flex; align-items: start; gap: 1rem; flex-wrap: wrap;">
 	<PemInput bind:value={csrInput} placeholder="Paste your PEM encoded CSR (PKCS#10) here" />
 
 	<div style="max-width: 100%;">
