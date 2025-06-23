@@ -1,9 +1,10 @@
 <script lang="ts">
 	import * as x509 from '@peculiar/x509';
-	import { arrayBufferToPem } from '$lib/utils/utils';
+	import { arrayBufferToPem } from '$lib/utils/common-utils';
 	import { CertData } from '$lib/models/cert-data';
 	import PemOutput from '$lib/components/pem-output.svelte';
 	import CertDataComponent from '$lib/components/cert-data-component.svelte';
+	import { validateCertData } from '$lib/utils/validation-util';
 
 	let csr: string = $state('');
 	let privateKey: string = $state('');
@@ -15,6 +16,10 @@
 	}
 
 	async function generateCSR() {
+		if (!validateCertData(certData)) {
+			return;
+		}
+
 		csr = '';
 		privateKey = '';
 
@@ -45,7 +50,8 @@
 				new x509.SubjectAlternativeNameExtension(
 					certData.sans
 						.filter((san) => san.value.length > 0)
-						.map((san) => new x509.GeneralName(san.type, san.value))
+						.map((san) => new x509.GeneralName(san.type, san.value)),
+					certData.subject.length === 0
 				)
 			);
 		}

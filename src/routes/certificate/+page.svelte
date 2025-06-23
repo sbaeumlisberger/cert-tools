@@ -1,10 +1,11 @@
 <script lang="ts">
 	import * as x509 from '@peculiar/x509';
-	import { exportPrivateKeyAsPem } from '$lib/utils/utils';
 	import { CertData } from '$lib/models/cert-data';
 	import CertDataComponent from '$lib/components/cert-data-component.svelte';
 	import { LocalCa } from '$lib/services/local-ca';
 	import PemOutput from '$lib/components/pem-output.svelte';
+	import { validateCertData } from '$lib/utils/validation-util';
+	import { exportPrivateKeyAsPem } from '$lib/utils/crypto-util';
 
 	let certificate: string = $state('');
 	let privateKey: string = $state('');
@@ -18,6 +19,10 @@
 	}
 
 	async function generateCSR() {
+		if (!validateCertData(certData)) {
+			return;
+		}
+
 		certificate = '';
 		privateKey = '';
 
@@ -48,7 +53,8 @@
 				new x509.SubjectAlternativeNameExtension(
 					certData.sans
 						.filter((san) => san.value.length > 0)
-						.map((san) => new x509.GeneralName(san.type, san.value))
+						.map((san) => new x509.GeneralName(san.type, san.value)),
+					certData.subject.length === 0
 				)
 			);
 		}
@@ -88,7 +94,7 @@
 		} else {
 			const x509Cert = await x509.X509CertificateGenerator.createSelfSigned({
 				signingAlgorithm: alg,
-				keys,
+				keys: keys,
 				name: certData.subject,
 				extensions: extensions
 			});

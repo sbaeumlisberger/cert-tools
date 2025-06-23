@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { saveFile } from '../utils/utils';
+	import { saveFile } from '../utils/common-utils';
 
 	let { value = '', placeholder = '', filename = '' } = $props();
 </script>

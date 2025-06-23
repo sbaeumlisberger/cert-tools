@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PemInput from '$lib/components/pem-input.svelte';
 	import PemOutput from '$lib/components/pem-output.svelte';
-	import { importPrivateKeyPkcs8 } from '$lib/utils/utils';
+	import { importPrivateKeyPkcs8 } from '$lib/utils/crypto-util';
 	import * as x509 from '@peculiar/x509';
 
 	let csrInput: string = $state('');
@@ -12,6 +12,11 @@
 	let signedCertificate: string = $state('');
 
 	async function signCertificate() {
+		if (issuerName.length > 0 && !issuerName.includes('=')) {
+			alert('Invalid issuer name');
+			return;
+		}
+
 		signedCertificate = '';
 		try {
 			const csr = new x509.Pkcs10CertificateRequest(csrInput);

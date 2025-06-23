@@ -2,9 +2,9 @@
 	import * as x509 from '@peculiar/x509';
 	import * as pkijs from 'pkijs';
 	import * as asn1js from 'asn1js';
-	import { formatHex, getAlgorithmName, pemToArrayBuffer } from '$lib/utils/utils';
+	import { formatHex, pemToArrayBuffer } from '$lib/utils/common-utils';
 	import PemInput from '$lib/components/pem-input.svelte';
-	import PemOutput from '$lib/components/pem-output.svelte';
+	import { getAlgorithmName } from '$lib/utils/crypto-util';
 
 	let input: string = $state('');
 	let parsed: string = $state('');

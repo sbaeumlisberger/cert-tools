@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PemOutput from '$lib/components/pem-output.svelte';
-	import { saveFile } from '$lib/utils/utils';
+	import { saveFile } from '$lib/utils/common-utils';
 	import * as forge from 'node-forge';
 
 	let password: string = $state('');
