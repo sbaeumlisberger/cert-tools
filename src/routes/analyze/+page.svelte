@@ -41,6 +41,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Certificate Tools - Analyze</title>
+</svelte:head>
+
 <h2>Analyze a CSR or Certificate</h2>
 
 <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">

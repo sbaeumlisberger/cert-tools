@@ -55,6 +55,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Certificate Tools - PKCS#12 Viewer</title>
+</svelte:head>
+
 <h2>PKCS#12 Viewer</h2>
 
 <div style="display: flex; align-items: center; column-gap: 4rem; row-gap: 1rem; flex-wrap: wrap;">

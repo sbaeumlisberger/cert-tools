@@ -40,6 +40,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Certificate Tools - Sign Certificate</title>
+</svelte:head>
+
 <h2>Sign Certificate</h2>
 
 <div style="display: flex; align-items: start; gap: 1rem; flex-wrap: wrap;">

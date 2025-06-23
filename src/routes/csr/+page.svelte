@@ -94,6 +94,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Certificate Tools - Create CSR</title>
+</svelte:head>
+
 <h2>Create CSR</h2>
 
 <div class="page-container">

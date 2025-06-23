@@ -84,7 +84,7 @@
 			const localCa = await LocalCa.create();
 			const x509Cert = await localCa.signCsr(
 				await x509.Pkcs10CertificateRequestGenerator.create({
-					name: certData.subject,
+					name: certData.subject || undefined,
 					keys: keys,
 					signingAlgorithm: alg,
 					extensions: extensions
@@ -104,6 +104,10 @@
 		privateKey = await exportPrivateKeyAsPem(keys.privateKey);
 	}
 </script>
+
+<svelte:head>
+	<title>Certificate Tools - Create Certificate</title>
+</svelte:head>
 
 <h2>Create Certificate</h2>
 
