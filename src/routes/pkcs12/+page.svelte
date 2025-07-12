@@ -1,6 +1,5 @@
 <script lang="ts">
 	import PemOutput from '$lib/components/pem-output.svelte';
-	import { saveFile } from '$lib/utils/common-utils';
 	import * as forge from 'node-forge';
 
 	let password: string = $state('');
@@ -37,8 +36,8 @@
 			Object.values(Object.groupBy(bags, (bag) => bag.attributes.localKeyId)).forEach((group) => {
 				if (!group) return;
 				console.log(group);
-				const key = group.find((bag) => bag.key !== undefined)?.key;
-				const certs = group.filter((bag) => bag.cert !== undefined);
+				const key = group.find((bag) => bag.key != null)?.key;
+				const certs = group.filter((bag) => bag.cert != null);
 				entries.push({
 					name:
 						group.find((bag) => bag.attributes.friendlyName)?.attributes.friendlyName

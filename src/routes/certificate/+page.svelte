@@ -1,11 +1,15 @@
 <script lang="ts">
 	import * as x509 from '@peculiar/x509';
+	import * as pkijs from 'pkijs';
+	import * as asn1js from 'asn1js';
 	import { CertData } from '$lib/models/cert-data';
 	import CertDataComponent from '$lib/components/cert-data-component.svelte';
 	import { LocalCa } from '$lib/services/local-ca';
 	import PemOutput from '$lib/components/pem-output.svelte';
 	import { validateCertData } from '$lib/utils/validation-util';
 	import { exportPrivateKeyAsPem } from '$lib/utils/crypto-util';
+	import { pemToArrayBuffer, saveFile } from '$lib/utils/common-utils';
+	import { createPkcs12 } from '$lib/services/pkcs12';
 
 	let certificate: string = $state('');
 	let privateKey: string = $state('');
@@ -13,6 +17,10 @@
 	let certData: CertData = new CertData();
 
 	let useLocalCa: boolean = $state(false);
+
+	let password: string = $state('');
+
+	let keyPair: CryptoKeyPair;
 
 	function onCertDataChanged(newCertData: CertData) {
 		certData = newCertData;
@@ -44,7 +52,7 @@
 			};
 		}
 
-		const keys = (await crypto.subtle.generateKey(alg, true, ['sign', 'verify'])) as CryptoKeyPair;
+		keyPair = (await crypto.subtle.generateKey(alg, true, ['sign', 'verify'])) as CryptoKeyPair;
 
 		const extensions = [];
 
@@ -85,7 +93,7 @@
 			const x509Cert = await localCa.signCsr(
 				await x509.Pkcs10CertificateRequestGenerator.create({
 					name: certData.subject || undefined,
-					keys: keys,
+					keys: keyPair,
 					signingAlgorithm: alg,
 					extensions: extensions
 				})
@@ -94,14 +102,26 @@
 		} else {
 			const x509Cert = await x509.X509CertificateGenerator.createSelfSigned({
 				signingAlgorithm: alg,
-				keys: keys,
+				keys: keyPair,
 				name: certData.subject,
 				extensions: extensions
 			});
 			certificate = x509Cert.toString('pem');
 		}
 
-		privateKey = await exportPrivateKeyAsPem(keys.privateKey);
+		privateKey = await exportPrivateKeyAsPem(keyPair.privateKey);
+	}
+
+	async function saveAsPKCS12() {
+		const chain: pkijs.Certificate[] = certificate
+			.split(new RegExp('\n(?=-----BEGIN CERTIFICATE-----)'))
+			.map((cert) => {
+				const derBuffer = pemToArrayBuffer(cert);
+				const asn1 = asn1js.fromBER(derBuffer);
+				return new pkijs.Certificate({ schema: asn1.result });
+			});
+		const pkcs12 = await createPkcs12(keyPair.privateKey, chain, password);
+		saveFile(new File([pkcs12], 'certificate.p12'));
 	}
 </script>
 
@@ -140,6 +160,10 @@
 			value={privateKey}
 			placeholder="Private key (PKCS#8) will appear here"
 			filename="private-key.pem" />
+		<div>
+			<input type="password" bind:value={password} placeholder="Password" />
+			<button onclick={saveAsPKCS12} disabled={!certificate || !password}>Save as PKCS#12</button>
+		</div>
 	</div>
 </div>
 
