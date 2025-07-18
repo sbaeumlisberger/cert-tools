@@ -129,7 +129,7 @@ async function generateIssuingCa(rootCa: Ca): Promise<Ca> {
 		],
 		signingKey: rootCa.privateKey,
 		signingAlgorithm: KEY_ALGORITHM,
-		issuer: 'CN=' + name
+		issuer: rootCa.cert.subject
 	});
 	return { cert: cert, privateKey: keys.privateKey };
 }
