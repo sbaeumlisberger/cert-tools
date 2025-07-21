@@ -37,7 +37,7 @@
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.20.0",
 		"vite": "^6.2.6",
-		"vitest": "^3.2.3"
+		"vitest": "^3.2.4"
 	},
 	"dependencies": {
 		"@peculiar/x509": "^1.12.3",

@@ -1,5 +1,5 @@
-import { exportPrivateKeyAsPem } from '$lib/utils/crypto-util';
 import { pemToArrayBuffer } from '$lib/utils/common-utils';
+import { exportPrivateKeyAsPem } from '$lib/utils/crypto-util';
 import * as x509 from '@peculiar/x509';
 
 const KEY_ROOT_CA_CERT = 'root-ca-cert';
@@ -56,7 +56,10 @@ export class LocalCa {
 		return await x509.X509CertificateGenerator.create({
 			publicKey: csr.publicKey,
 			subject: csr.subject,
-			extensions: csr.extensions,
+			extensions: csr.extensions.concat([
+				await x509.SubjectKeyIdentifierExtension.create(csr.publicKey),
+				new x509.AuthorityKeyIdentifierExtension(getSubjectKeyIdentifier(this.issuingCa.cert)!)
+			]),
 			signingKey: this.issuingCa.privateKey,
 			signingAlgorithm: KEY_ALGORITHM,
 			issuer: this.issuingCa.cert.subject
@@ -105,11 +108,17 @@ async function generateRootCa(): Promise<Ca> {
 				x509.KeyUsageFlags.digitalSignature
 					| x509.KeyUsageFlags.keyCertSign
 					| x509.KeyUsageFlags.cRLSign
-			)
+			),
+			await x509.SubjectKeyIdentifierExtension.create(keys.publicKey),
+			await x509.AuthorityKeyIdentifierExtension.create(keys.publicKey)
 		],
 		notAfter: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000) // 10 years
 	});
 	return { cert: cert, privateKey: keys.privateKey };
+}
+
+function getSubjectKeyIdentifier(cert: x509.X509Certificate): string | undefined {
+	return cert.extensions.find((e) => e instanceof x509.SubjectKeyIdentifierExtension)?.keyId;
 }
 
 async function generateIssuingCa(rootCa: Ca): Promise<Ca> {
@@ -125,7 +134,9 @@ async function generateIssuingCa(rootCa: Ca): Promise<Ca> {
 				x509.KeyUsageFlags.digitalSignature
 					| x509.KeyUsageFlags.keyCertSign
 					| x509.KeyUsageFlags.cRLSign
-			)
+			),
+			await x509.SubjectKeyIdentifierExtension.create(keys.publicKey),
+			new x509.AuthorityKeyIdentifierExtension(getSubjectKeyIdentifier(rootCa.cert)!)
 		],
 		signingKey: rootCa.privateKey,
 		signingAlgorithm: KEY_ALGORITHM,

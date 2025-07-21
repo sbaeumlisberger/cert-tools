@@ -1,15 +1,13 @@
 <script lang="ts">
-	import * as x509 from '@peculiar/x509';
-	import * as pkijs from 'pkijs';
-	import * as asn1js from 'asn1js';
-	import { CertData } from '$lib/models/cert-data';
 	import CertDataComponent from '$lib/components/cert-data-component.svelte';
-	import { LocalCa } from '$lib/services/local-ca';
 	import PemOutput from '$lib/components/pem-output.svelte';
-	import { validateCertData } from '$lib/utils/validation-util';
-	import { exportPrivateKeyAsPem } from '$lib/utils/crypto-util';
-	import { pemToArrayBuffer, saveFile } from '$lib/utils/common-utils';
+	import { CertData } from '$lib/models/cert-data';
+	import { LocalCa } from '$lib/services/local-ca';
 	import { createPkcs12 } from '$lib/services/pkcs12';
+	import { pemToArrayBuffer, saveFile } from '$lib/utils/common-utils';
+	import { exportPrivateKeyAsPem } from '$lib/utils/crypto-util';
+	import { validateCertData } from '$lib/utils/validation-util';
+	import * as x509 from '@peculiar/x509';
 
 	let certificate: string = $state('');
 	let privateKey: string = $state('');
@@ -113,12 +111,11 @@
 	}
 
 	async function saveAsPKCS12() {
-		const chain: pkijs.Certificate[] = certificate
+		const chain: x509.X509Certificate[] = certificate
 			.split(new RegExp('\n(?=-----BEGIN CERTIFICATE-----)'))
 			.map((cert) => {
 				const derBuffer = pemToArrayBuffer(cert);
-				const asn1 = asn1js.fromBER(derBuffer);
-				return new pkijs.Certificate({ schema: asn1.result });
+				return new x509.X509Certificate(derBuffer);
 			});
 		const pkcs12 = await createPkcs12(keyPair.privateKey, chain, password);
 		saveFile(new File([pkcs12], 'certificate.p12'));

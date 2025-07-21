@@ -13,7 +13,8 @@
 			<a class="nav-item" href="{base}/certificate">Create Certificate</a>
 			<a class="nav-item" href="{base}/sign">Sign Certificate</a>
 			<a class="nav-item" href="{base}/analyze">Analyze</a>
-			<a class="nav-item" href="{base}/pkcs12">PKCS#12 Viewer</a>
+			<a class="nav-item" href="{base}/pkcs12-viewer">PKCS#12 Viewer</a>
+			<a class="nav-item" href="{base}/pkcs12-builder">PKCS#12 Builder</a>
 		</div>
 	</div>
 </div>

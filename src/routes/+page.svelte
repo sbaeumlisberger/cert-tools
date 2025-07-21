@@ -22,7 +22,8 @@
 	<div><a href="{base}/certificate">Create Certificate</a></div>
 	<div><a href="{base}/sign">Sign Certificate</a></div>
 	<div><a href="{base}/analyze">Analyze</a></div>
-	<div><a href="{base}/pkcs12">PKCS#12 Viewer</a></div>
+	<div><a href="{base}/pkcs12-viewer">PKCS#12 Viewer</a></div>
+	<div><a href="{base}/pkcs12-builder">PKCS#12 Builder</a></div>
 </div>
 
 <style>

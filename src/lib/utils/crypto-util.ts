@@ -1,13 +1,13 @@
-import * as pkijs from 'pkijs';
 import * as asn1js from 'asn1js';
+import * as pkijs from 'pkijs';
 import { arrayBufferToPem, pemToArrayBuffer } from './common-utils';
 
-export async function importPrivateKeyPkcs8(pem: string) {
+export async function importPrivateKeyPkcs8(pem: string, extractable: boolean = false) {
 	const arrayBuffer = pemToArrayBuffer(pem);
 	const asn1 = asn1js.fromBER(arrayBuffer);
 	const privateKeyInfo = new pkijs.PrivateKeyInfo({ schema: asn1.result });
 	const algorithm = determineAlgorithm(privateKeyInfo);
-	return await crypto.subtle.importKey('pkcs8', arrayBuffer, algorithm, false, ['sign']);
+	return await crypto.subtle.importKey('pkcs8', arrayBuffer, algorithm, extractable, ['sign']);
 }
 
 export function getAlgorithmName(privateKeyInfo: pkijs.PrivateKeyInfo) {

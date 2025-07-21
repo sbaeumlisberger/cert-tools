@@ -1,8 +1,12 @@
 <script lang="ts">
 	import PemOutput from '$lib/components/pem-output.svelte';
-	import * as forge from 'node-forge';
+	import { parsePkcs12 } from '$lib/services/pkcs12';
+	import { arrayBufferToPem } from '$lib/utils/common-utils';
+	import * as x509 from '@peculiar/x509';
+	import * as pkijs from 'pkijs';
 
 	let password: string = $state('');
+	let info: string = $state('');
 	let entries: { name: string; key: string; certs: string }[] = $state([]);
 	let errorMessage: string = $state('');
 	let canView: boolean = $state(false);
@@ -10,6 +14,7 @@
 	let pkcs12FileArrayBuffer: ArrayBuffer;
 
 	function handleFileChange(event: Event) {
+		info = '';
 		entries = [];
 		errorMessage = '';
 		canView = true;
@@ -24,32 +29,40 @@
 		}
 	}
 
-	function viewPkcs12() {
+	async function viewPkcs12() {
+		info = '';
 		entries = [];
 		errorMessage = '';
 		try {
-			const pkcs12Der = forge.util.createBuffer(pkcs12FileArrayBuffer);
-			const pkcs12Asn1 = forge.asn1.fromDer(pkcs12Der);
-			const pkcs12 = forge.pkcs12.pkcs12FromAsn1(pkcs12Asn1, false, password);
-			const bags = pkcs12.safeContents.map((sc) => sc.safeBags).flat();
-			let i = 1;
-			Object.values(Object.groupBy(bags, (bag) => bag.attributes.localKeyId)).forEach((group) => {
-				if (!group) return;
-				console.log(group);
-				const key = group.find((bag) => bag.key != null)?.key;
-				const certs = group.filter((bag) => bag.cert != null);
+			const pkcs12 = await parsePkcs12(pkcs12FileArrayBuffer, password);
+			info =
+				pkcs12.mac !== undefined
+					? `MAC: Hash Algorithm: ${pkcs12.mac.hashAlgorithm}, Iterations: ${pkcs12.mac.iterations}, Salt Length: ${pkcs12.mac?.saltLength}`
+					: 'No MAC present';
+			pkcs12.entries.forEach((entry) => {
 				entries.push({
-					name:
-						group.find((bag) => bag.attributes.friendlyName)?.attributes.friendlyName
-						|| i.toString(),
-					key: key !== undefined ? forge.pki.privateKeyToPem(key) : '',
-					certs: certs.map((bag) => forge.pki.certificateToPem(bag.cert!)).join('\n')
+					name: entry.name,
+					key: keyToPEM(entry.key),
+					certs: entry.chain.map((cert) => certToPEM(cert)).join('\n')
 				});
-				i++;
 			});
+			return;
 		} catch (error) {
 			console.error(error);
 			errorMessage = String(error);
+		}
+
+		function keyToPEM(key: pkijs.PrivateKeyInfo): string {
+			const der = key.toSchema().toBER(false);
+			return arrayBufferToPem(der, '-----BEGIN PRIVATE KEY-----', '-----END PRIVATE KEY-----');
+		}
+
+		function certToPEM(cert: x509.X509Certificate): string {
+			return arrayBufferToPem(
+				cert.rawData,
+				'-----BEGIN CERTIFICATE-----',
+				'-----END CERTIFICATE-----'
+			);
 		}
 	}
 </script>
@@ -68,6 +81,10 @@
 	</div>
 	<button onclick={viewPkcs12} disabled={!canView}>Open selected file</button>
 </div>
+
+<br />
+
+<p>{info}</p>
 
 <br />
 
