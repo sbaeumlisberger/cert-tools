@@ -1,14 +1,26 @@
 <script lang="ts">
+	import { afterNavigate } from '$app/navigation';
 	import { base } from '$app/paths';
+
+	afterNavigate(() => {
+		document.getElementById('nav')!.classList.remove('open');
+	});
+
+	function toggleNav() {
+		document.getElementById('nav')!.classList.toggle('open');
+	}
 </script>
 
 <div class="header">
 	<div class="header-content">
-		<a class="app-title-container" href="{base}/">
-			<h1 class="app-title">Certificate Tools</h1>
-			<div class="app-subtitle">running completely in your browser</div>
-		</a>
-		<div class="nav">
+		<div class="title-nav-button-container">
+			<a class="app-title-container" href="{base}/">
+				<h1 class="app-title">Certificate Tools</h1>
+				<div class="app-subtitle">running completely in your browser</div>
+			</a>
+			<button class="toggle-nav-button" on:click={toggleNav}>☰</button>
+		</div>
+		<div id="nav" class="nav">
 			<a class="nav-item" href="{base}/csr">Create CSR</a>
 			<a class="nav-item" href="{base}/certificate">Create Certificate</a>
 			<a class="nav-item" href="{base}/sign">Sign Certificate</a>
@@ -40,7 +52,12 @@
 		flex-wrap: wrap;
 	}
 
+	.title-nav-button-container {
+		display: flex;
+	}
+
 	.app-title-container {
+		flex: 1;
 		align-self: center;
 		padding-block: 0.5rem;
 		text-decoration: none;
@@ -59,14 +76,41 @@
 		margin-bottom: 0.5rem;
 	}
 
+	.toggle-nav-button {
+		background: transparent;
+		font-size: 2rem;
+		border: none;
+		display: none;
+	}
+
+	.toggle-nav-button:hover {
+		background: #00000011;
+	}
+
+	.toggle-nav-button:focus-visible {
+		outline: white 1px solid;
+	}
+
 	.nav {
 		flex: 1;
 		display: flex;
 	}
 
-	@media (max-width: 380px) {
+	@media (max-width: 600px) {
+		.header-content {
+			flex-direction: column;
+		}
+
 		.nav {
-			flex-wrap: wrap;
+			flex-direction: column;
+		}
+
+		.nav:not(.open) {
+			display: none;
+		}
+
+		.toggle-nav-button {
+			display: block;
 		}
 	}
 
