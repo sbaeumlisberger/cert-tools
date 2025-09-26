@@ -17,18 +17,18 @@
 
 <h4>Certificate tools</h4>
 <div class="cards-container">
-	<div><a href="{base}/csr">Create CSR</a></div>
-	<div><a href="{base}/certificate">Create Certificate</a></div>
-	<div><a href="{base}/sign">Sign Certificate</a></div>
-	<div><a href="{base}/analyze">Analyze</a></div>
-	<div><a href="{base}/pkcs12-viewer">PKCS#12 Viewer</a></div>
-	<div><a href="{base}/pkcs12-builder">PKCS#12 Builder</a></div>
+	<a href="{base}/csr">Create CSR</a>
+	<a href="{base}/certificate">Create Certificate</a>
+	<a href="{base}/sign">Sign Certificate</a>
+	<a href="{base}/analyze">Analyze</a>
+	<a href="{base}/pkcs12-viewer">PKCS#12 Viewer</a>
+	<a href="{base}/pkcs12-builder">PKCS#12 Builder</a>
 </div>
 
 <h4>General tools</h4>
 <div class="cards-container">
-	<div><a href="{base}/base64">Decode/Encode Base64</a></div>
-	<div><a href="{base}/svg">SVG to PNG</a></div>
+	<a href="{base}/base64">Decode/Encode Base64</a>
+	<a href="{base}/svg">SVG to PNG</a>
 </div>
 
 <style>
@@ -38,7 +38,9 @@
 		gap: 1rem;
 	}
 
-	.cards-container > div {
+	.cards-container > a {
+		text-decoration: none;
+		color: unset;
 		padding: 1rem;
 		min-height: 80px;
 		background: var(--background-color-alt1);
@@ -49,13 +51,8 @@
 		align-items: center;
 	}
 
-	.cards-container > div:hover {
+	.cards-container > a:hover {
 		background: var(--background-color-alt2);
 		cursor: pointer;
-	}
-
-	.cards-container > div > a {
-		text-decoration: none;
-		color: unset;
 	}
 </style>
