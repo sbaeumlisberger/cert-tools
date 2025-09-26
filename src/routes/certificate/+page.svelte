@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CertDataComponent from '$lib/components/cert-data-component.svelte';
-	import PemOutput from '$lib/components/pem-output.svelte';
+	import TextOutput from '$lib/components/text-output.svelte';
 	import { CertData } from '$lib/models/cert-data';
 	import { LocalCa } from '$lib/services/local-ca';
 	import { createPkcs12 } from '$lib/services/pkcs12';
@@ -149,11 +149,11 @@
 		<button style="width: 100%;" onclick={generateCSR}>Generate Certificate</button>
 	</div>
 	<div class="output-container">
-		<PemOutput
+		<TextOutput
 			value={certificate}
 			placeholder="PEM encoded certificate will appear here"
 			filename="certificate.pem" />
-		<PemOutput
+		<TextOutput
 			value={privateKey}
 			placeholder="Private key (PKCS#8) will appear here"
 			filename="private-key.pem" />

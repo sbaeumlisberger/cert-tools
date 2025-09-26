@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PemInput from '$lib/components/pem-input.svelte';
+	import TextInput from '$lib/components/text-input.svelte';
 	import { createPkcs12 } from '$lib/services/pkcs12';
 	import { pemToArrayBuffer, saveFile } from '$lib/utils/common-utils';
 	import { importPrivateKeyPkcs8 } from '$lib/utils/crypto-util';
@@ -33,11 +33,11 @@
 
 <h2>PKCS#12 Builder</h2>
 
-<PemInput
+<TextInput
 	bind:value={privateKeyInput}
 	placeholder="Paste your PEM encoded private key (PKCS#8) here" />
 
-<PemInput bind:value={certificatesInput} placeholder="Paste your PEM encoded certificates here" />
+<TextInput bind:value={certificatesInput} placeholder="Paste your PEM encoded certificates here" />
 
 <br /><br />
 

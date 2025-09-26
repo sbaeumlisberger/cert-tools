@@ -1,10 +1,10 @@
 <script lang="ts">
-	import * as x509 from '@peculiar/x509';
-	import { arrayBufferToPem } from '$lib/utils/common-utils';
-	import { CertData } from '$lib/models/cert-data';
-	import PemOutput from '$lib/components/pem-output.svelte';
 	import CertDataComponent from '$lib/components/cert-data-component.svelte';
+	import TextOutput from '$lib/components/text-output.svelte';
+	import { CertData } from '$lib/models/cert-data';
+	import { arrayBufferToPem } from '$lib/utils/common-utils';
 	import { validateCertData } from '$lib/utils/validation-util';
+	import * as x509 from '@peculiar/x509';
 
 	let csr: string = $state('');
 	let privateKey: string = $state('');
@@ -107,8 +107,8 @@
 	</div>
 
 	<div class="output-container">
-		<PemOutput value={csr} placeholder="CSR (PKCS#10) will appear here" filename="csr.pem" />
-		<PemOutput
+		<TextOutput value={csr} placeholder="CSR (PKCS#10) will appear here" filename="csr.pem" />
+		<TextOutput
 			value={privateKey}
 			placeholder="Private key (PKCS#8) will appear here"
 			filename="private-key.pem" />

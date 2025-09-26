@@ -1,10 +1,10 @@
 <script lang="ts">
-	import * as x509 from '@peculiar/x509';
-	import * as pkijs from 'pkijs';
-	import * as asn1js from 'asn1js';
+	import TextInput from '$lib/components/text-input.svelte';
 	import { formatHex, pemToArrayBuffer } from '$lib/utils/common-utils';
-	import PemInput from '$lib/components/pem-input.svelte';
 	import { getAlgorithmName } from '$lib/utils/crypto-util';
+	import * as x509 from '@peculiar/x509';
+	import * as asn1js from 'asn1js';
+	import * as pkijs from 'pkijs';
 
 	let input: string = $state('');
 	let parsed: string = $state('');
@@ -48,7 +48,7 @@
 <h2>Analyze a CSR or Certificate</h2>
 
 <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
-	<PemInput bind:value={input} placeholder="Paste your CSR or certificate here" />
+	<TextInput bind:value={input} placeholder="Paste your CSR or certificate here" />
 
 	<button onclick={parse}>Parse</button>
 

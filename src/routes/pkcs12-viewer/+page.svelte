@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PemOutput from '$lib/components/pem-output.svelte';
+	import TextOutput from '$lib/components/text-output.svelte';
 	import { parsePkcs12 } from '$lib/services/pkcs12';
 	import { arrayBufferToPem } from '$lib/utils/common-utils';
 	import * as x509 from '@peculiar/x509';
@@ -103,10 +103,10 @@
 					<tr>
 						<td>{entry.name}</td>
 						<td style="padding-left: 1rem;">
-							<PemOutput value={entry.key} filename={entry.name + '_key.pem'} />
+							<TextOutput value={entry.key} filename={entry.name + '_key.pem'} />
 						</td>
 						<td style="padding-left: 1rem;">
-							<PemOutput value={entry.certs} filename={entry.name + '_certs.pem'} />
+							<TextOutput value={entry.certs} filename={entry.name + '_certs.pem'} />
 						</td>
 					</tr>
 				{/each}

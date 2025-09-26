@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PemInput from '$lib/components/pem-input.svelte';
-	import PemOutput from '$lib/components/pem-output.svelte';
+	import TextInput from '$lib/components/text-input.svelte';
+	import TextOutput from '$lib/components/text-output.svelte';
 	import { importPrivateKeyPkcs8 } from '$lib/utils/crypto-util';
 	import * as x509 from '@peculiar/x509';
 
@@ -47,10 +47,10 @@
 <h2>Sign Certificate</h2>
 
 <div style="display: flex; align-items: start; gap: 1rem; flex-wrap: wrap;">
-	<PemInput bind:value={csrInput} placeholder="Paste your PEM encoded CSR (PKCS#10) here" />
+	<TextInput bind:value={csrInput} placeholder="Paste your PEM encoded CSR (PKCS#10) here" />
 
 	<div style="max-width: 100%;">
-		<PemInput
+		<TextInput
 			bind:value={privateKeyInput}
 			placeholder="Paste your PEM encoded signing key (PKCS#8) here" />
 
@@ -71,7 +71,7 @@
 
 <br /><br />
 
-<PemOutput
+<TextOutput
 	value={signedCertificate}
 	placeholder="Signed certificate will appear here"
 	filename="certificate.pem" />

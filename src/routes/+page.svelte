@@ -5,8 +5,8 @@
 <h2>About</h2>
 
 <p>
-	This site offers a collection of dev tools to create and analyze certificates, CSRs, PKCS#12 files
-	and more. Everything runs locally in your web browser using the <a
+	This site offers a collection of dev tools especially to create and analyze certificates, CSRs,
+	PKCS#12 files and more. Everything runs locally in your web browser using the <a
 		href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API">Web Crypto API</a>
 	and libraries like <a href="https://peculiarventures.github.io/x509/">@peculiar/x509</a>,
 	<a href="https://pkijs.org/">pkijs</a>
@@ -15,8 +15,7 @@
 	<a href="https://github.com/sbaeumlisberger/cert-tools">GitHub</a>.
 </p>
 
-<br />
-
+<h4>Certificate tools</h4>
 <div class="cards-container">
 	<div><a href="{base}/csr">Create CSR</a></div>
 	<div><a href="{base}/certificate">Create Certificate</a></div>
@@ -24,6 +23,12 @@
 	<div><a href="{base}/analyze">Analyze</a></div>
 	<div><a href="{base}/pkcs12-viewer">PKCS#12 Viewer</a></div>
 	<div><a href="{base}/pkcs12-builder">PKCS#12 Builder</a></div>
+</div>
+
+<h4>General tools</h4>
+<div class="cards-container">
+	<div><a href="{base}/base64">Decode/Encode Base64</a></div>
+	<div><a href="{base}/svg">SVG to PNG</a></div>
 </div>
 
 <style>

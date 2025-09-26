@@ -3,7 +3,7 @@ export function pemToBase64(pem: string): string {
 }
 
 export function base64StringToArrayBuffer(base64: string): ArrayBuffer {
-	return stringToArrayBuffer(atob(base64));
+	return Uint8Array.fromBase64(base64).buffer;
 }
 
 export function stringToArrayBuffer(str: string): ArrayBuffer {
@@ -11,7 +11,7 @@ export function stringToArrayBuffer(str: string): ArrayBuffer {
 }
 
 export function arrayBufferToBase64String(arrayBuffer: ArrayBuffer): string {
-	return btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+	return new Uint8Array(arrayBuffer).toBase64();
 }
 
 export function pemToArrayBuffer(pem: string): ArrayBuffer {

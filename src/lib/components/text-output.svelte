@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { saveFile } from '../utils/common-utils';
 
-	let { value = '', placeholder = '', filename = '' } = $props();
+	let { value = '', placeholder = '', rows = 20, wrap = false, filename = '' } = $props();
 </script>
 
 <div style="display: flex; gap: 0.5rem;">
 	<textarea
-		style="min-width: 0; resize: none; font-family: monospace; white-space: pre;"
-		rows="20"
+		style="min-width: 0; resize: none; font-family: monospace; white-space: {wrap
+			? 'pre-wrap'
+			: 'pre'};"
+		{rows}
 		cols="65"
 		{value}
 		readonly
