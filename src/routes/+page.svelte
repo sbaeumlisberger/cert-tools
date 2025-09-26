@@ -28,6 +28,10 @@
 <h4>General tools</h4>
 <div class="cards-container">
 	<a href="{base}/base64">Decode/Encode Base64</a>
+	<a href="{base}/json">Format JSON</a>
+	<a href="{base}/xml">Format XML</a>
+	<a href="{base}/jwt">Parse JWT</a>
+	<a href="{base}/uuid">Generate UUID</a>
 	<a href="{base}/svg">SVG to PNG</a>
 </div>
 

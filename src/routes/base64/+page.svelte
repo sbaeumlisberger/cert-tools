@@ -42,5 +42,5 @@
 		<span><input type="checkbox" bind:checked={urlSafe} /> URL-safe</span>
 	</div>
 
-	<TextOutput value={output} placeholder="Output" rows="30" wrap readonly />
+	<TextOutput value={output} placeholder="Output" rows="30" wrap />
 </div>
