@@ -52,10 +52,10 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - SVG</title>
+	<title>Certificate Tools - Convert SVG to PNG</title>
 </svelte:head>
 
-<h2>SVG to PNG</h2>
+<h2>Convert SVG to PNG</h2>
 
 <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
 	<TextInput bind:value={input} rows={30} placeholder="Paste or drop your SVG here" />
@@ -73,7 +73,8 @@
 			id="img"
 			src={imageSource}
 			alt=""
-			width="410"
+			width={targetWidth}
+			height={targetHeight}
 			onload={onImageLoaded}
 			onerror={onImageError} />
 	</div>

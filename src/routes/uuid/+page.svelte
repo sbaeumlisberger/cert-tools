@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - XML</title>
+	<title>Certificate Tools - Generate UUID</title>
 </svelte:head>
 
 <h2>Generate UUID (v4)</h2>

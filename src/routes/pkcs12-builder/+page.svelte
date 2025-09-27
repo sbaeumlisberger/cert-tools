@@ -28,10 +28,10 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - PKCS#12 Builder</title>
+	<title>Certificate Tools - Create PKCS#12</title>
 </svelte:head>
 
-<h2>PKCS#12 Builder</h2>
+<h2>Create PKCS#12</h2>
 
 <TextInput
 	bind:value={privateKeyInput}

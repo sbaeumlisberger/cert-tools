@@ -42,7 +42,7 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - Analyze</title>
+	<title>Certificate Tools - Analyze a CSR or Certificate</title>
 </svelte:head>
 
 <h2>Analyze a CSR or Certificate</h2>

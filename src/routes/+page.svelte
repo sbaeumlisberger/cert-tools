@@ -20,9 +20,9 @@
 	<a href="{base}/csr">Create CSR</a>
 	<a href="{base}/certificate">Create Certificate</a>
 	<a href="{base}/sign">Sign Certificate</a>
-	<a href="{base}/analyze">Analyze</a>
-	<a href="{base}/pkcs12-viewer">PKCS#12 Viewer</a>
-	<a href="{base}/pkcs12-builder">PKCS#12 Builder</a>
+	<a href="{base}/analyze">Analyze a CSR or Certificate</a>
+	<a href="{base}/pkcs12-viewer">View PKCS#12</a>
+	<a href="{base}/pkcs12-builder">Create PKCS#12</a>
 </div>
 
 <h4>General tools</h4>
@@ -31,8 +31,10 @@
 	<a href="{base}/json">Format JSON</a>
 	<a href="{base}/xml">Format XML</a>
 	<a href="{base}/jwt">Parse JWT</a>
+	<a href="{base}/timestmap">Parse timestamp</a>
 	<a href="{base}/uuid">Generate UUID</a>
-	<a href="{base}/svg">SVG to PNG</a>
+	<a href="{base}/svg">Convert SVG to PNG</a>
+	<a href="{base}/ico">Convert image to ICO</a>
 </div>
 
 <style>

@@ -39,7 +39,7 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - UUID</title>
+	<title>Certificate Tools - Format XML</title>
 </svelte:head>
 
 <h2>Format XML</h2>

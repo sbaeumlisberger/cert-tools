@@ -128,7 +128,7 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - JWT</title>
+	<title>Certificate Tools - Parse JWT</title>
 </svelte:head>
 
 <h2>Parse JWT</h2>

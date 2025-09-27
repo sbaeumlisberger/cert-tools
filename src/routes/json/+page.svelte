@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - JSON</title>
+	<title>Certificate Tools - Format JSON</title>
 </svelte:head>
 
 <h2>Format JSON</h2>

@@ -68,10 +68,10 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - PKCS#12 Viewer</title>
+	<title>Certificate Tools - View PKCS#12</title>
 </svelte:head>
 
-<h2>PKCS#12 Viewer</h2>
+<h2>View PKCS#12</h2>
 
 <div style="display: flex; align-items: center; column-gap: 4rem; row-gap: 1rem; flex-wrap: wrap;">
 	<input type="file" accept=".p12,.pfx" onchange={(e) => handleFileChange(e)} />
