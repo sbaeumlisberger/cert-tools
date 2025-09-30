@@ -41,10 +41,12 @@ export async function saveFile(file: File) {
 		await writable.write(file);
 		await writable.close();
 	} else {
+		const objectUrl = URL.createObjectURL(file);
 		const a = document.createElement('a');
-		a.href = URL.createObjectURL(file);
+		a.href = objectUrl;
 		a.download = file.name;
 		a.click();
+		URL.revokeObjectURL(objectUrl);
 	}
 }
 
@@ -63,4 +65,24 @@ export function arrayBufferEquals(buffer1: ArrayBuffer, buffer2: ArrayBuffer) {
 	}
 
 	return true;
+}
+
+export function randomInteger(min: number, max: number) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function pickRandom<T>(array: T[]) {
+	return array[randomInteger(0, array.length - 1)];
+}
+
+export function clickAsync(asyncFunction: () => Promise<void>) {
+	return async (event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) => {
+		const button = event.currentTarget;
+		try {
+			button.disabled = true;
+			await asyncFunction();
+		} finally {
+			button.disabled = false;
+		}
+	};
 }

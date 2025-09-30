@@ -23,6 +23,7 @@
 	<a href="{base}/analyze">Analyze a CSR or Certificate</a>
 	<a href="{base}/pkcs12-viewer">View PKCS#12</a>
 	<a href="{base}/pkcs12-builder">Create PKCS#12</a>
+	<a href="{base}/certificate-bulk">Bulk-create certificates</a>
 </div>
 
 <h4>General tools</h4>
