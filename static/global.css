@@ -44,8 +44,8 @@ input,
 select,
 textarea {
 	font: inherit;
-	color: inherit;
-	background-color: transparent;
+	color: unset;
+	background-color: var(--background-color);
 	border: 1px solid var(--forms-border-color);
 	border-radius: 4px;
 	box-sizing: border-box;
@@ -117,4 +117,8 @@ textarea:disabled {
 
 button.g-active {
 	background-color: var(--button-background-active);
+}
+
+a {
+	color: #007bff;
 }

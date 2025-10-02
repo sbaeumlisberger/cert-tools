@@ -10,8 +10,8 @@
 		href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API">Web Crypto API</a>
 	and libraries like <a href="https://peculiarventures.github.io/x509/">@peculiar/x509</a>,
 	<a href="https://pkijs.org/">pkijs</a>
-	and <a href="https://asn1js.org/">asn1js</a>. No data ever leaves your computer. The code of this
-	site is open source and available on
+	and <a href="https://asn1js.org/">asn1js</a>. No data leaves your computer. The code of this site
+	is open source and available on
 	<a href="https://github.com/sbaeumlisberger/cert-tools">GitHub</a>.
 </p>
 
