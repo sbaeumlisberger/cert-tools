@@ -4,18 +4,16 @@
 	let { value = '', placeholder = '', rows = 20, wrap = false, filename = '' } = $props();
 </script>
 
-<div style="display: flex; gap: 0.5rem;">
+<div class="root-container">
 	<textarea
-		style="min-width: 0; resize: none; font-family: monospace; white-space: {wrap
-			? 'pre-wrap'
-			: 'pre'};"
+		style="white-space: {wrap ? 'pre-wrap' : 'pre'};"
 		{rows}
 		cols="65"
 		{value}
 		readonly
 		{placeholder}></textarea>
 
-	<div style="display: flex; flex-direction: column; gap: 0.5rem;">
+	<div class="buttons-container">
 		<button onclick={() => navigator.clipboard.writeText(value)} disabled={value.length === 0}>
 			Copy
 		</button>
@@ -26,3 +24,24 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	.root-container {
+		display: inline-flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	textarea {
+		min-width: 0;
+		resize: none;
+		font-family: monospace;
+	}
+
+	.buttons-container {
+		display: flex;
+		align-self: flex-end;
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+</style>
