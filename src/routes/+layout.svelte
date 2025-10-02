@@ -17,21 +17,37 @@
 	<div class="header-content">
 		<div class="title-nav-button-container">
 			<a class="app-title-container" href="{base}/">
-				<h1 class="app-title">Certificate & Dev Tools</h1>
-				<div class="app-subtitle">running completely in your web browser</div>
+				<h1 class="app-title">Certificate & Developer Tools</h1>
+				<div class="app-subtitle">running locally in your web browser</div>
 			</a>
 		</div>
+
+		<div class="github-button-container">
+			<script async defer src="https://buttons.github.io/buttons.js"></script>
+			<a
+				class="github-button"
+				href="https://github.com/sbaeumlisberger/cert-tools"
+				data-icon="octicon-star"
+				data-show-count="true"
+				aria-label="Star sbaeumlisberger/cert-tools on GitHub">
+				GitHub
+			</a>
+		</div>
+
 		<button class="toggle-nav-button" on:click={toggleNav}>☰</button>
 	</div>
 </header>
 
 <div class="body">
-	<nav id="nav" class="nav" hidden={page.url.pathname === base + '/'}>
+	<nav id="nav" class="nav {page.url.pathname === base + '/' ? 'nav-collapsed' : ''}">
 		{#each navigation as category}
 			<div>
 				<div class="nav-category-title">{category.title}</div>
 				{#each category.items as item}
-					<a href="{base}{item.route}">{item.label}</a>
+					<a
+						href={base + item.route}
+						class={page.url.pathname === base + item.route ? 'active-nav-item' : ''}
+						>{item.label}</a>
 				{/each}
 			</div>
 		{/each}
@@ -54,9 +70,9 @@
 		flex: 1;
 		max-width: 1500px;
 		padding-inline: 1rem;
-		padding-block: 0.5rem;
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		column-gap: 1rem;
 	}
 
@@ -67,18 +83,19 @@
 	.app-title-container {
 		flex: 1;
 		align-self: flex-start;
-		padding-block: 0.5rem;
+		padding-block-start: 0.5rem;
+		padding-block-end: 0.75rem;
 		text-decoration: none;
 		color: unset;
 		display: flex;
-		flex-direction: row;
-		align-items: center;
-		column-gap: 2rem;
-		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: start;
+		gap: 0.25rem;
 	}
 
 	.app-title {
 		margin: 0;
+		line-height: 1.1;
 	}
 
 	.app-subtitle {
@@ -123,6 +140,10 @@
 		gap: 2rem;
 	}
 
+	.nav.nav-collapsed:not(.open) {
+		display: none;
+	}
+
 	.nav-category-title {
 		padding-inline: 0.25rem;
 		margin-bottom: 0.5rem;
@@ -138,20 +159,27 @@
 		padding-block: 0.5rem;
 		padding-inline: 0.75rem;
 		border-radius: 0.5rem;
+		border-left: 2px solid transparent;
 	}
 
 	.nav a:hover {
 		background: #00000044;
 	}
 
+	.nav a.active-nav-item {
+		border-radius: 0px;
+		border-left: 2px solid var(--primary-color);
+	}
+
 	.main {
 		flex: 1;
-		margin-inline: 1rem;
+		padding-inline: 1rem;
+		padding-block-end: 1rem;
 	}
 
 	@media (max-width: 800px) {
-		.body {
-			flex-direction: column;
+		.github-button-container {
+			display: none;
 		}
 
 		.toggle-nav-button {
@@ -171,6 +199,10 @@
 		.nav > * {
 			flex: 1;
 			min-width: 160px;
+		}
+
+		.body {
+			flex-direction: column;
 		}
 	}
 </style>
