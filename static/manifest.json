@@ -1,7 +1,7 @@
 {
 	"name": "Certificate Tools",
 	"short_name": "Cert Tools",
-	"start_url": "/",
+	"start_url": "/cert-tools/",
 	"display": "standalone",
 	"theme_color": "#007bff",
 	"background_color": "#007bff",
