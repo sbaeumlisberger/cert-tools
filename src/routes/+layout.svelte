@@ -167,7 +167,7 @@
 	}
 
 	.nav a.active-nav-item {
-		border-radius: 0px;
+		border-radius: 0rem 0.5rem 0.5rem 0rem;
 		border-left: 2px solid var(--primary-color);
 	}
 

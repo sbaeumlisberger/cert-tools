@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { navigation } from '$lib/navigation';
 </script>
 
 <h2>About</h2>
@@ -15,28 +16,14 @@
 	<a href="https://github.com/sbaeumlisberger/cert-tools">GitHub</a>.
 </p>
 
-<h4>Certificate tools</h4>
-<div class="cards-container">
-	<a href="{base}/csr">Create CSR</a>
-	<a href="{base}/certificate">Create Certificate</a>
-	<a href="{base}/sign">Sign Certificate</a>
-	<a href="{base}/analyze">Analyze a CSR or Certificate</a>
-	<a href="{base}/pkcs12-viewer">View PKCS#12</a>
-	<a href="{base}/pkcs12-builder">Create PKCS#12</a>
-	<a href="{base}/certificate-bulk">Bulk-create certificates</a>
-</div>
-
-<h4>General tools</h4>
-<div class="cards-container">
-	<a href="{base}/base64">Decode/Encode Base64</a>
-	<a href="{base}/json">Format JSON</a>
-	<a href="{base}/xml">Format XML</a>
-	<a href="{base}/jwt">Parse JWT</a>
-	<a href="{base}/timestmap">Parse timestamp</a>
-	<a href="{base}/uuid">Generate UUID</a>
-	<a href="{base}/svg">Convert SVG to PNG</a>
-	<a href="{base}/ico">Convert image to ICO</a>
-</div>
+{#each navigation as category}
+	<h4>{category.title}</h4>
+	<div class="cards-container">
+		{#each category.items as item}
+			<a href={base + item.route}>{item.label}</a>
+		{/each}
+	</div>
+{/each}
 
 <style>
 	.cards-container {

@@ -15,12 +15,19 @@
 </script>
 
 <textarea
-	style="min-width: 0; max-width: 100%; resize: none; font-family: monospace; white-space: {wrap
-		? 'pre-wrap'
-		: 'pre'};"
+	style="white-space: {wrap ? 'pre-wrap' : 'pre'};"
 	{rows}
 	cols="65"
 	bind:value
 	{placeholder}
 	ondrop={drop}
 	ondragover={(event) => event.preventDefault()}></textarea>
+
+<style>
+	textarea {
+		min-width: 0;
+		max-width: 100%;
+		resize: none;
+		font-family: monospace;
+	}
+</style>
