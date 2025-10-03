@@ -52,7 +52,7 @@
 
 		keyPair = (await crypto.subtle.generateKey(alg, true, ['sign', 'verify'])) as CryptoKeyPair;
 
-		const extensions = [];
+		const extensions: x509.Extension[] = [];
 
 		if (certData.sans.some((san) => san.value.length > 0)) {
 			extensions.push(

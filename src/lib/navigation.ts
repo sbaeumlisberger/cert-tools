@@ -15,7 +15,7 @@ export const navigation = [
 				route: '/sign'
 			},
 			{
-				label: 'Analyze a CSR or certificate',
+				label: 'Decode a CSR or certificate',
 				route: '/analyze'
 			},
 			{

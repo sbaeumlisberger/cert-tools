@@ -1,11 +1,18 @@
 <script lang="ts">
-	import { clickAsync as disableWhile, pickRandom, randomInteger } from '$lib/utils/common-utils';
+	import {
+		disableWhile,
+		pickRandom,
+		randomInteger,
+		randomString,
+		randomStringLowerCase
+	} from '$lib/utils/common-utils';
 	import { exportPrivateKeyAsPem } from '$lib/utils/crypto-util';
 	import * as x509 from '@peculiar/x509';
 
 	let amount = $state(100);
-	let progress = $state(0);
 	let includePrivateKey = $state('random');
+	let maxAmountOfSANs = $state(10);
+	let progress = $state(0);
 
 	async function generateCertificates() {
 		const directory = await showDirectoryPicker();
@@ -22,11 +29,18 @@
 				'verify'
 			])) as CryptoKeyPair;
 
+			const extensions: x509.Extension[] = [];
+
+			const numberOfSANs = randomInteger(0, maxAmountOfSANs);
+			if (numberOfSANs > 0) {
+				extensions.push(createRandomSANsExtension(numberOfSANs));
+			}
+
 			const x509Cert = await x509.X509CertificateGenerator.createSelfSigned({
 				signingAlgorithm: algorithm,
 				keys: keyPair,
-				name: `CN=Certificate ${num}`
-				// TODO extensions: extensions
+				name: `CN=Certificate ${num}`,
+				extensions: extensions
 			});
 			progress = i / amount;
 
@@ -44,22 +58,83 @@
 	}
 
 	function getRandomAlgorithm(): RsaHashedKeyGenParams | EcKeyGenParams | { name: 'Ed25519' } {
-		switch (randomInteger(0, 2)) {
-			case 0:
-				return {
-					name: 'RSASSA-PKCS1-v1_5',
-					modulusLength: pickRandom([2048, 3072, 4096]),
-					publicExponent: new Uint8Array([1, 0, 1]), // 65537
-					hash: pickRandom(['SHA-256', 'SHA-384', 'SHA-512'])
-				};
-			case 1:
-				return {
-					name: 'ECDSA',
-					namedCurve: pickRandom(['P-256', 'P-384', 'P-521'])
-				};
-			default:
-				return { name: 'Ed25519' };
+		return pickRandom([
+			{
+				name: 'RSASSA-PKCS1-v1_5',
+				modulusLength: pickRandom([2048, 3072, 4096]),
+				publicExponent: new Uint8Array([1, 0, 1]), // 65537
+				hash: pickRandom(['SHA-256', 'SHA-384', 'SHA-512'])
+			},
+			{
+				name: 'ECDSA',
+				namedCurve: pickRandom(['P-256', 'P-384', 'P-521'])
+			},
+			{
+				name: 'Ed25519'
+			}
+		]);
+	}
+
+	function createRandomSANsExtension(numberOfSANs: number): x509.Extension {
+		const sans: x509.GeneralName[] = [];
+		for (let i = 0; i < numberOfSANs; i++) {
+			const type = pickRandom(['dns', 'dn', 'email', 'ip', 'url', 'guid', 'upn', 'id']);
+			const value = randomValueForSanType(type);
+			sans.push(new x509.GeneralName(type, value));
 		}
+		return new x509.SubjectAlternativeNameExtension(sans);
+	}
+
+	function randomValueForSanType(type: x509.GeneralNameType): string {
+		switch (type) {
+			case 'dns':
+				return randomDns();
+			case 'dn':
+				return randomDN();
+			case 'email':
+				return randomEmail();
+			case 'ip':
+				return randomIp();
+			case 'url':
+				return randomUrl();
+			case 'guid':
+				return randomGuid();
+			case 'upn':
+				return randomEmail();
+			case 'id':
+				return randomOid();
+		}
+	}
+
+	function randomDns() {
+		return `${randomStringLowerCase(8)}.example.com`;
+	}
+
+	function randomDN() {
+		return `CN=${randomString(8)}`;
+	}
+
+	function randomEmail() {
+		return `${randomStringLowerCase(8)}.${randomStringLowerCase(8)}@example.com`;
+	}
+
+	function randomIp(): string {
+		return Array.from({ length: 4 }, () => randomInteger(0, 255)).join('.');
+	}
+
+	function randomUrl(): string {
+		return `https://www.example.com/${randomString(8)}`;
+	}
+
+	function randomGuid() {
+		return crypto.randomUUID();
+	}
+
+	function randomOid(): string {
+		const first = randomInteger(0, 2);
+		const second = randomInteger(0, 39);
+		const rest = Array.from({ length: 3 }, () => randomInteger(0, 999));
+		return [first, second, ...rest].join('.');
 	}
 
 	async function showDirectoryPicker(): Promise<FileSystemDirectoryHandle | null> {
@@ -101,21 +176,26 @@
 	<title>Certificate Tools - Bulk-create certificates</title>
 </svelte:head>
 
-<h2>Bulk-create certificates</h2>
+<div style="display: flex; flex-direction: column; align-items: start;">
+	<h2>Bulk-create certificates</h2>
 
-<p>Numer of certificates</p>
-<input type="number" bind:value={amount} />
+	<span style="margin-block: 0rem 0.5rem;">Numer of certificates</span>
+	<input type="number" bind:value={amount} />
 
-<p>Include private key</p>
-<label><input type="radio" value="random" bind:group={includePrivateKey} /> Random </label>
-<label><input type="radio" value="always" bind:group={includePrivateKey} /> Always </label>
-<label><input type="radio" value="never" bind:group={includePrivateKey} /> Never </label>
+	<span style="margin-block: 1.5rem 0.5rem;">Include private key</span>
+	<div>
+		<label><input type="radio" value="random" bind:group={includePrivateKey} /> Random </label>
+		<label><input type="radio" value="always" bind:group={includePrivateKey} /> Always </label>
+		<label><input type="radio" value="never" bind:group={includePrivateKey} /> Never </label>
+	</div>
 
-<br /><br />
+	<span style="margin-block: 1.5rem 0.5rem;">Maximum number of SANs</span>
+	<input type="number" bind:value={maxAmountOfSANs} />
 
-<button onclick={disableWhile(generateCertificates)}>Generate</button>
+	<button style="margin-block: 2rem;" onclick={disableWhile(generateCertificates)}>
+		Generate
+	</button>
 
-<br /><br />
-
-<p>Progress</p>
-<progress style="width: 100%; max-width: 400px" value={progress}></progress>
+	<span style="margin-block: 0rem 0.5rem;">Progress</span>
+	<progress style="width: 100%; max-width: 400px" value={progress}></progress>
+</div>

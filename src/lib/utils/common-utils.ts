@@ -71,11 +71,29 @@ export function randomInteger(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function pickRandom<T>(array: T[]) {
+export function randomStringFromAlphabet(alphabet: string, length: number): string {
+	let result = '';
+	for (let i = 0; i < length; i++) {
+		result += alphabet[randomInteger(0, alphabet.length - 1)];
+	}
+	return result;
+}
+
+export function randomString(length: number): string {
+	const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	return randomStringFromAlphabet(alphabet, length);
+}
+
+export function randomStringLowerCase(length: number): string {
+	const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
+	return randomStringFromAlphabet(alphabet, length);
+}
+
+export function pickRandom<const T extends readonly unknown[]>(array: T): T[number] {
 	return array[randomInteger(0, array.length - 1)];
 }
 
-export function clickAsync(asyncFunction: () => Promise<void>) {
+export function disableWhile(asyncFunction: () => Promise<void>) {
 	return async (event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) => {
 		const button = event.currentTarget;
 		try {
