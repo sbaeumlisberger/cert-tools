@@ -14,6 +14,13 @@
 		return () => URL.revokeObjectURL(imageSource!);
 	});
 
+	async function onFileUploaded(event: Event) {
+		const inputElement = event.target as HTMLInputElement;
+		if (inputElement.files && inputElement.files.length > 0) {
+			input = await inputElement.files[0].text();
+		}
+	}
+
 	function downloadAsPng() {
 		try {
 			const svgBlob = new Blob([input], { type: 'image/svg+xml' });
@@ -57,17 +64,18 @@
 
 <h2>Convert SVG to PNG</h2>
 
-<div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
-	<TextInput bind:value={input} rows={30} placeholder="Paste or drop your SVG here" />
+<div class="root-container">
+	<div class="vertical-stack">
+		<input type="file" accept="image/*" onchange={onFileUploaded} />
+		<TextInput bind:value={input} rows={30} placeholder="Paste or drop your SVG here" />
+	</div>
 
-	<div style="display: flex; flex-direction: column; gap: 1rem;">
-		<button onclick={downloadAsPng} disabled={!downloadEnabled}>Download as PNG</button>
-
-		<div>
-			<input style="mar" type="number" placeholder="Width (optional)" bind:value={targetWidth} />
+	<div class="vertical-stack" style="align-items: start;">
+		<div class="download-container">
+			<button onclick={downloadAsPng} disabled={!downloadEnabled}> Download as PNG </button>
+			<input type="number" placeholder="Width (optional)" bind:value={targetWidth} />
 			<input type="number" placeholder="Height (optional)" bind:value={targetHeight} />
 		</div>
-
 		<label for="img">Preview:</label>
 		<img
 			id="img"
@@ -79,3 +87,29 @@
 			onerror={onImageError} />
 	</div>
 </div>
+
+<style>
+	.root-container {
+		display: flex;
+		flex-flow: row wrap;
+		column-gap: 2rem;
+		row-gap: 1rem;
+	}
+
+	.vertical-stack {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		max-width: 100%;
+	}
+
+	.download-container {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0px, 1fr));
+		gap: 1rem;
+	}
+
+	.download-container button {
+		grid-column-end: span 2;
+	}
+</style>

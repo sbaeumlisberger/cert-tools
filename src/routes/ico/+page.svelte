@@ -80,40 +80,64 @@
 
 <h2>Convert image to ICO</h2>
 
-<div style="display: flex; flex-direction: column; gap: 2rem; align-items: flex-start;">
-	<div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-		<input type="file" accept="image/*" onchange={onFileUploaded} />
+<div class="root-container">
+	<input type="file" accept="image/*" onchange={onFileUploaded} />
 
-		<button disabled={!downloadEnabled} onclick={saveAsIco} style="padding-inline: 2rem;"
-			>Convert to ICO</button>
+	<p class="gap-before">Included resolutions</p>
+	<div class="resolutions-container">
+		{#each resolutions as res}
+			<div>
+				<input type="checkbox" bind:checked={res.include} id={'res-' + res.size} />
+				<label for={'res-' + res.size}>{res.size}x{res.size}</label>
+			</div>
+		{/each}
 	</div>
 
-	<div>
-		<p>Included resolutions</p>
-		<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-			{#each resolutions as res}
-				<div>
-					<input type="checkbox" bind:checked={res.include} id={'res-' + res.size} />
-					<label for={'res-' + res.size}>{res.size}x{res.size}</label>
-				</div>
-			{/each}
-		</div>
-	</div>
+	<button class="gap-before" disabled={!downloadEnabled} onclick={saveAsIco}>
+		Convert to ICO
+	</button>
 
-	<div>
-		<p>Preview</p>
-		<div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;">
-			{#each resolutions as res}
-				<img
-					src={imageSource}
-					alt=""
-					width={res.size}
-					height={res.size}
-					hidden={!res.include}
-					style="border: 1px solid black;"
-					onload={onImageLoaded}
-					onerror={onImageError} />
-			{/each}
-		</div>
+	<p class="gap-before">Preview</p>
+	<div class="preview-container">
+		{#each resolutions as res}
+			<img
+				src={imageSource}
+				alt=""
+				width={res.size}
+				height={res.size}
+				hidden={!res.include}
+				style="border: 1px solid black;"
+				onload={onImageLoaded}
+				onerror={onImageError} />
+		{/each}
 	</div>
 </div>
+
+<style>
+	.root-container {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+	}
+
+	.root-container > * {
+		max-width: 100%;
+	}
+
+	.gap-before {
+		margin-block-start: 2rem;
+	}
+
+	.resolutions-container {
+		display: flex;
+		flex-flow: row wrap;
+		gap: 1rem;
+	}
+
+	.preview-container {
+		display: flex;
+		flex-flow: row wrap;
+		gap: 1rem;
+		align-items: flex-start;
+	}
+</style>

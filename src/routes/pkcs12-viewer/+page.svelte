@@ -13,19 +13,14 @@
 
 	let pkcs12FileArrayBuffer: ArrayBuffer;
 
-	function handleFileChange(event: Event) {
+	async function handleFileChange(event: Event) {
 		info = '';
 		entries = [];
 		errorMessage = '';
 		canView = true;
 		const input = event.target as HTMLInputElement;
 		if (input.files && input.files.length > 0) {
-			const file = input.files[0];
-			const reader = new FileReader();
-			reader.onload = async (e) => {
-				pkcs12FileArrayBuffer = e.target?.result as ArrayBuffer;
-			};
-			reader.readAsArrayBuffer(file);
+			pkcs12FileArrayBuffer = await input.files[0].arrayBuffer();
 		}
 	}
 

@@ -121,7 +121,7 @@
 	.body {
 		width: 100%;
 		max-width: 1500px;
-		height: 100%;
+		flex: 1;
 		margin: auto;
 		display: flex;
 		flex-direction: row;
