@@ -10,7 +10,7 @@
 			ecCurve: curve,
 			rsaKeyLength: rsaKeyLength,
 			hashAlgorithm: hashAlgorithm,
-			subject: subject,
+			subject: subject.replace(/([a-z]+)=/gi, (_match, attribute) => attribute.toUpperCase() + '='),
 			sans: sans,
 			keyUsages: keyUsages,
 			extendedKeyUsages: extendedKeyUsages
