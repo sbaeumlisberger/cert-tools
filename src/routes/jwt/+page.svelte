@@ -133,9 +133,9 @@
 
 <h2>Parse JWT</h2>
 
-<div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
+<div style="display: flex; gap: 1rem 2rem; align-items: flex-start; flex-wrap: wrap;">
 	<TextInput placeholder="Paste JWT here" bind:value={jwt} wrap />
 	<TextInput placeholder="Paste youe key here (optional)" bind:value={key} wrap />
 
-	<TextOutput title="Parsed JWT" value={parsedJwt} wrap />
+	<TextOutput placeholder="Parsed JWT" value={parsedJwt} wrap />
 </div>

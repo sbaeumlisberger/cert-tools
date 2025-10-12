@@ -52,7 +52,7 @@
 </script>
 
 <div class="root-container">
-	<div class="tow-columns">
+	<div class="two-columns">
 		<span>Key Type:</span>
 		<span>
 			<select bind:value={keyAlgorithm}>
@@ -105,7 +105,9 @@
 					{/each}
 				</select>
 				<input type="text" bind:value={san.value} />
-				<button onclick={() => sans.splice(index, 1)}>Remove</button>
+				<button onclick={() => sans.splice(index, 1)} aria-label="Remove" title="Remove">
+					✖
+				</button>
 			</div>
 		{/each}
 		<button style="margin-top: 0.5rem;" onclick={() => sans.push({ type: 'dns', value: '' })}>
@@ -113,27 +115,24 @@
 		</button>
 	</div>
 
-	<div style="display: flex; gap: 4rem;">
-		<div>
+	<div class="key-usages-container">
+		<div class="key-usages-list">
 			<span>Key Usages:</span>
 			{#each keyUsages as keyUsage}
-				<div>
-					<label>
-						<input type="checkbox" bind:checked={keyUsage.enabled} />
-						{keyUsage.name}
-					</label>
-				</div>
+				<label>
+					<input type="checkbox" bind:checked={keyUsage.enabled} />
+					{keyUsage.name}
+				</label>
 			{/each}
 		</div>
-		<div>
+		<div class="key-usages-spacer"></div>
+		<div class="key-usages-list">
 			<span>Extended Key Usages:</span>
 			{#each extendedKeyUsages as extendedKeyUsage}
-				<div>
-					<label>
-						<input type="checkbox" bind:checked={extendedKeyUsage.enabled} />
-						{extendedKeyUsage.name}
-					</label>
-				</div>
+				<label>
+					<input type="checkbox" bind:checked={extendedKeyUsage.enabled} />
+					{extendedKeyUsage.name}
+				</label>
 			{/each}
 		</div>
 	</div>
@@ -146,11 +145,32 @@
 		gap: 1rem;
 	}
 
-	.tow-columns {
+	.two-columns {
 		display: grid;
 		grid-template-columns: auto 1fr;
 		gap: 1rem;
 		align-items: center;
 		justify-items: start;
+	}
+
+	.key-usages-container {
+		display: flex;
+		flex-wrap: wrap;
+		row-gap: 1rem;
+	}
+
+	.key-usages-spacer {
+		flex: 1;
+		min-width: 1rem;
+		max-width: 4rem;
+	}
+
+	.key-usages-list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.key-usages-list > :first-child {
+		margin-bottom: 0.25rem;
 	}
 </style>

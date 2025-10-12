@@ -27,6 +27,7 @@
 
 <style>
 	.root-container {
+		max-width: 100%;
 		display: inline-flex;
 		flex-direction: column;
 		gap: 0.5rem;
@@ -34,6 +35,7 @@
 
 	textarea {
 		min-width: 0;
+		max-height: 25vh;
 		resize: none;
 		font-family: monospace;
 	}

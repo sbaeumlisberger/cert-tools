@@ -33,7 +33,7 @@
 
 <h2>Decode/Encode Base64</h2>
 
-<div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
+<div style="display: flex; gap: 1rem 2rem; align-items: flex-start; flex-wrap: wrap;">
 	<TextInput bind:value={input} placeholder="Input" rows="30" wrap />
 
 	<div style="display: flex; flex-direction: column; gap: 1rem;">

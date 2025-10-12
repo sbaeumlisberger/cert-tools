@@ -27,6 +27,7 @@
 	textarea {
 		min-width: 0;
 		max-width: 100%;
+		max-height: 25vh;
 		resize: none;
 		font-family: monospace;
 	}

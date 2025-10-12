@@ -47,7 +47,7 @@
 
 <h2>Decode a CSR or Certificate</h2>
 
-<div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
+<div style="display: flex; gap: 1rem 2rem; align-items: flex-start; flex-wrap: wrap;">
 	<TextInput bind:value={input} placeholder="Paste your CSR or certificate here" />
 
 	<button onclick={parse}>Parse</button>

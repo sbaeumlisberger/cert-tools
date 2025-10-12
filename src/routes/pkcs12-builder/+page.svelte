@@ -33,13 +33,17 @@
 
 <h2>Create PKCS#12</h2>
 
-<TextInput
-	bind:value={privateKeyInput}
-	placeholder="Paste your PEM encoded private key (PKCS#8) here" />
+<div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+	<TextInput
+		bind:value={privateKeyInput}
+		placeholder="Paste your PEM encoded private key (PKCS#8) here" />
 
-<TextInput bind:value={certificatesInput} placeholder="Paste your PEM encoded certificates here" />
+	<TextInput
+		bind:value={certificatesInput}
+		placeholder="Paste your PEM encoded certificates here" />
+</div>
 
-<br /><br />
+<br />
 
 <span>Password:</span>
 <input type="password" bind:value={password} />

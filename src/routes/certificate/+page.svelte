@@ -157,7 +157,7 @@
 			value={privateKey}
 			placeholder="Private key (PKCS#8) will appear here"
 			filename="private-key.pem" />
-		<div>
+		<div style="display: flex; flex-flow: row wrap; gap: 0.5rem;">
 			<input type="password" bind:value={password} placeholder="Password" />
 			<button onclick={saveAsPKCS12} disabled={!certificate || !password}>Save as PKCS#12</button>
 		</div>
