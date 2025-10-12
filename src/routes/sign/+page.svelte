@@ -74,4 +74,5 @@
 <TextOutput
 	value={signedCertificate}
 	placeholder="Signed certificate will appear here"
-	filename="certificate.pem" />
+	filename="certificate.pem"
+	focusOnValueChange />

@@ -1,11 +1,28 @@
 <script lang="ts">
 	import { saveFile } from '../utils/common-utils';
 
-	let { value = '', placeholder = '', rows = 20, wrap = false, filename = '' } = $props();
+	let {
+		value = '',
+		placeholder = '',
+		rows = 20,
+		wrap = false,
+		filename = '',
+		focusOnValueChange = false
+	} = $props();
+
+	let textareaElement: HTMLTextAreaElement;
+
+	$effect(() => {
+		if (value && focusOnValueChange) {
+			textareaElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+			textareaElement.focus();
+		}
+	});
 </script>
 
 <div class="root-container">
 	<textarea
+		bind:this={textareaElement}
 		style="white-space: {wrap ? 'pre-wrap' : 'pre'};"
 		{rows}
 		cols="65"

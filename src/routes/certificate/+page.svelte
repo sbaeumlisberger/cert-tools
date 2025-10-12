@@ -86,28 +86,33 @@
 			);
 		}
 
-		if (useLocalCa) {
-			const localCa = await LocalCa.create();
-			const x509Cert = await localCa.signCsr(
-				await x509.Pkcs10CertificateRequestGenerator.create({
-					name: certData.subject || undefined,
-					keys: keyPair,
+		try {
+			if (useLocalCa) {
+				const localCa = await LocalCa.create();
+				const x509Cert = await localCa.signCsr(
+					await x509.Pkcs10CertificateRequestGenerator.create({
+						name: certData.subject || undefined,
+						keys: keyPair,
+						signingAlgorithm: alg,
+						extensions: extensions
+					})
+				);
+				certificate = x509Cert.toString('pem') + '\n' + localCa.exportChain();
+			} else {
+				const x509Cert = await x509.X509CertificateGenerator.createSelfSigned({
 					signingAlgorithm: alg,
+					keys: keyPair,
+					name: certData.subject,
 					extensions: extensions
-				})
-			);
-			certificate = x509Cert.toString('pem') + '\n' + localCa.exportChain();
-		} else {
-			const x509Cert = await x509.X509CertificateGenerator.createSelfSigned({
-				signingAlgorithm: alg,
-				keys: keyPair,
-				name: certData.subject,
-				extensions: extensions
-			});
-			certificate = x509Cert.toString('pem');
-		}
+				});
+				certificate = x509Cert.toString('pem');
+			}
 
-		privateKey = await exportPrivateKeyAsPem(keyPair.privateKey);
+			privateKey = await exportPrivateKeyAsPem(keyPair.privateKey);
+		} catch (error) {
+			console.error(error);
+			certificate = String(error);
+		}
 	}
 
 	async function saveAsPKCS12() {
@@ -152,7 +157,8 @@
 		<TextOutput
 			value={certificate}
 			placeholder="PEM encoded certificate will appear here"
-			filename="certificate.pem" />
+			filename="certificate.pem"
+			focusOnValueChange />
 		<TextOutput
 			value={privateKey}
 			placeholder="Private key (PKCS#8) will appear here"

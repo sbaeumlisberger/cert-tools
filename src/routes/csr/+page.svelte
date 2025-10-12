@@ -77,15 +77,20 @@
 			);
 		}
 
-		const csrPkcs10 = await x509.Pkcs10CertificateRequestGenerator.create({
-			name: certData.subject,
-			keys: keys,
-			signingAlgorithm: alg,
-			extensions: extensions
-		});
+		try {
+			const csrPkcs10 = await x509.Pkcs10CertificateRequestGenerator.create({
+				name: certData.subject,
+				keys: keys,
+				signingAlgorithm: alg,
+				extensions: extensions
+			});
 
-		csr = csrPkcs10.toString('pem');
-		privateKey = await exportPrivateKey(keys.privateKey);
+			csr = csrPkcs10.toString('pem');
+			privateKey = await exportPrivateKey(keys.privateKey);
+		} catch (error) {
+			console.error(error);
+			csr = String(error);
+		}
 	}
 
 	async function exportPrivateKey(key: CryptoKey): Promise<string> {
@@ -107,7 +112,11 @@
 	</div>
 
 	<div class="output-container">
-		<TextOutput value={csr} placeholder="CSR (PKCS#10) will appear here" filename="csr.pem" />
+		<TextOutput
+			value={csr}
+			placeholder="CSR (PKCS#10) will appear here"
+			filename="csr.pem"
+			focusOnValueChange />
 		<TextOutput
 			value={privateKey}
 			placeholder="Private key (PKCS#8) will appear here"
