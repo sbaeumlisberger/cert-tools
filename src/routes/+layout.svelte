@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { navigation } from '$lib/navigation';
 
@@ -16,8 +16,8 @@
 <header class="header">
 	<div class="header-content">
 		<div class="title-nav-button-container">
-			<a class="app-title-container" href="{base}/">
-				<h1 class="app-title">Certificate & Developer Tools</h1>
+			<a class="app-title-container" href={resolve('/')}>
+				<h1 class="app-title">Certificate & Dev Tools</h1>
 				<div class="app-subtitle">running locally in your web browser</div>
 			</a>
 		</div>
@@ -39,14 +39,14 @@
 </header>
 
 <div class="body">
-	<nav id="nav" class="nav {page.url.pathname === base + '/' ? 'nav-collapsed' : ''}">
+	<nav id="nav" class="nav {page.url.pathname === resolve('/') ? 'nav-collapsed' : ''}">
 		{#each navigation as category}
 			<div>
 				<div class="nav-category-title">{category.title}</div>
 				{#each category.items as item}
 					<a
-						href={base + item.route}
-						class={page.url.pathname === base + item.route ? 'active-nav-item' : ''}
+						href={resolve(item.route)}
+						class={page.url.pathname === resolve(item.route) ? 'active-nav-item' : ''}
 						>{item.label}</a>
 				{/each}
 			</div>

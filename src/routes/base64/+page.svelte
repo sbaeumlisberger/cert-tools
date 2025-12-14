@@ -34,7 +34,7 @@
 <h2>Decode/Encode Base64</h2>
 
 <div style="display: flex; gap: 1rem 2rem; align-items: flex-start; flex-wrap: wrap;">
-	<TextInput bind:value={input} placeholder="Input" rows="30" wrap />
+	<TextInput bind:value={input} placeholder="Paste or drop your input here" rows="30" wrap />
 
 	<div style="display: flex; flex-direction: column; gap: 1rem;">
 		<button onclick={decode}>Decode</button>
@@ -42,5 +42,5 @@
 		<span><input type="checkbox" bind:checked={urlSafe} /> URL-safe</span>
 	</div>
 
-	<TextOutput value={output} placeholder="Output" rows="30" wrap />
+	<TextOutput value={output} placeholder="Output will appear here" rows="30" wrap />
 </div>

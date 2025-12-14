@@ -47,12 +47,14 @@
 <h2>Sign Certificate</h2>
 
 <div style="display: flex; align-items: start; gap: 1rem; flex-wrap: wrap;">
-	<TextInput bind:value={csrInput} placeholder="Paste your PEM encoded CSR (PKCS#10) here" />
+	<TextInput
+		bind:value={csrInput}
+		placeholder="Paste or drop your PEM encoded CSR (PKCS#10) here" />
 
 	<div style="max-width: 100%;">
 		<TextInput
 			bind:value={privateKeyInput}
-			placeholder="Paste your PEM encoded signing key (PKCS#8) here" />
+			placeholder="Paste or drop your PEM encoded signing key (PKCS#8) here" />
 
 		<br />
 		<small>Supported key types: RSA, ECDSA (P-256, P-384, P521), Ed25519</small>

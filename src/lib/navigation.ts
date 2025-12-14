@@ -15,6 +15,10 @@ export const navigation = [
 				route: '/sign'
 			},
 			{
+				label: 'Convert PEM/DER',
+				route: '/convert'
+			},
+			{
 				label: 'Decode a CSR or certificate',
 				route: '/analyze'
 			},
