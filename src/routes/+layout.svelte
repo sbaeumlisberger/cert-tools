@@ -34,7 +34,15 @@
 			</a>
 		</div>
 
-		<button class="toggle-nav-button" on:click={toggleNav}>☰</button>
+		{#if page.url.pathname !== resolve('/')}
+			<button class="toggle-nav-button" on:click={toggleNav} aria-label="Menu">
+				<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<rect x="4" y="5" width="16" height="2" rx="1" />
+					<rect x="4" y="11" width="16" height="2" rx="1" />
+					<rect x="4" y="17" width="16" height="2" rx="1" />
+				</svg>
+			</button>
+		{/if}
 	</div>
 </header>
 
@@ -73,7 +81,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		column-gap: 1rem;
+		column-gap: 0.5rem;
 	}
 
 	.title-nav-button-container {
@@ -96,18 +104,23 @@
 	.app-title {
 		margin: 0;
 		line-height: 1.1;
+		font-size: clamp(1.2rem, 6vw, 2rem);
 	}
 
 	.app-subtitle {
 		margin: 0;
 		opacity: 0.8;
+		font-size: clamp(0.8rem, 4vw, 1rem);
 	}
 
 	.toggle-nav-button {
 		background: transparent;
-		font-size: 2rem;
 		border: none;
 		display: none;
+		width: 3rem;
+		height: 3rem;
+		padding: 0;
+		fill: #ffffff;
 	}
 
 	.toggle-nav-button:hover {
