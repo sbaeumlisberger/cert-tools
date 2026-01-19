@@ -44,6 +44,10 @@ export const navigation = [
 				route: '/base64'
 			},
 			{
+				label: 'Decode/Encode URL',
+				route: '/url-encode'
+			},
+			{
 				label: 'Format JSON',
 				route: '/json'
 			},
