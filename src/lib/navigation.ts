@@ -11,7 +11,7 @@ export const navigation = [
 				route: '/certificate'
 			},
 			{
-				label: 'Sign certificate',
+				label: 'Sign certificate for CSR',
 				route: '/sign'
 			},
 			{
@@ -20,15 +20,15 @@ export const navigation = [
 			},
 			{
 				label: 'Decode a CSR or certificate',
-				route: '/analyze'
+				route: '/decode'
 			},
 			{
-				label: 'View PKCS#12',
-				route: '/pkcs12-viewer'
+				label: 'Analyze PKCS#12',
+				route: '/pkcs12-analyze'
 			},
 			{
-				label: 'Create PKCS#12',
-				route: '/pkcs12-builder'
+				label: 'Build PKCS#12',
+				route: '/pkcs12-build'
 			},
 			{
 				label: 'Bulk-create certificates',
@@ -40,12 +40,12 @@ export const navigation = [
 		title: 'Developer tools',
 		items: [
 			{
-				label: 'Decode/Encode Base64',
+				label: 'Base64',
 				route: '/base64'
 			},
 			{
-				label: 'Decode/Encode URL',
-				route: '/url-encode'
+				label: 'URL encoding',
+				route: '/url-encoding'
 			},
 			{
 				label: 'Format JSON',

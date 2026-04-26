@@ -28,10 +28,10 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - Create PKCS#12</title>
+	<title>Certificate Tools - Build PKCS#12</title>
 </svelte:head>
 
-<h2>Create PKCS#12</h2>
+<h2>Build PKCS#12</h2>
 
 <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
 	<TextInput

@@ -25,10 +25,10 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - Decode/Encode URL</title>
+	<title>Certificate Tools - URL encoding</title>
 </svelte:head>
 
-<h2>Decode/Encode URL</h2>
+<h2>URL encoding</h2>
 
 <div style="display: flex; gap: 1rem 2rem; align-items: flex-start; flex-wrap: wrap;">
 	<TextInput bind:value={input} placeholder="Paste or drop your input here" rows="30" wrap />

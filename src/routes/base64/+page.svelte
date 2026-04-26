@@ -31,7 +31,7 @@
 	<title>Certificate Tools - Base64</title>
 </svelte:head>
 
-<h2>Decode/Encode Base64</h2>
+<h2>Base64</h2>
 
 <div style="display: flex; gap: 1rem 2rem; align-items: flex-start; flex-wrap: wrap;">
 	<TextInput bind:value={input} placeholder="Paste or drop your input here" rows="30" wrap />

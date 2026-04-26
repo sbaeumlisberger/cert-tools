@@ -41,10 +41,10 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - Sign Certificate</title>
+	<title>Certificate Tools - Sign certificate for CSR</title>
 </svelte:head>
 
-<h2>Sign Certificate</h2>
+<h2>Sign certificate for CSR</h2>
 
 <div style="display: flex; align-items: start; gap: 1rem; flex-wrap: wrap;">
 	<TextInput
@@ -69,7 +69,7 @@
 
 <br /><br />
 
-<button onclick={signCertificate}>Sign Certificate</button>
+<button onclick={signCertificate}>Sign certificate</button>
 
 <br /><br />
 

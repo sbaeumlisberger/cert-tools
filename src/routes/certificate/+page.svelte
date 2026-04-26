@@ -128,10 +128,10 @@
 </script>
 
 <svelte:head>
-	<title>Certificate Tools - Create Certificate</title>
+	<title>Certificate Tools - Create certificate</title>
 </svelte:head>
 
-<h2>Create Certificate</h2>
+<h2>Create certificate</h2>
 
 <div class="page-container">
 	<div class="input-container">
@@ -151,7 +151,7 @@
 			</button>
 		</div>
 		<CertDataComponent onchange={onCertDataChanged} />
-		<button style="width: 100%;" onclick={generateCSR}>Generate Certificate</button>
+		<button style="width: 100%;" onclick={generateCSR}>Create certificate</button>
 	</div>
 	<div class="output-container">
 		<TextOutput
