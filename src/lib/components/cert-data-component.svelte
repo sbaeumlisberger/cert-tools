@@ -34,25 +34,54 @@
 	const availableSanTypes = ['dns', 'dn', 'email', 'ip', 'url', 'guid', 'upn', 'id'];
 	let sans = $state([] as Array<{ type: x509.GeneralNameType; value: string }>);
 
-	const keyUsages = Object.entries(x509.KeyUsageFlags)
-		.filter((entry) => isNaN(Number(entry[0])))
-		.map(([name, flag]) => ({
-			name: name,
-			flag: flag,
-			enabled: false
-		}));
+	const keyUsages = $state(
+		Object.entries(x509.KeyUsageFlags)
+			.filter((entry) => isNaN(Number(entry[0])))
+			.map(([name, flag]) => ({
+				name: name,
+				flag: flag,
+				enabled: false
+			}))
+	);
 
-	const extendedKeyUsages = Object.entries(x509.ExtendedKeyUsage)
-		.filter((entry) => isNaN(Number(entry[0])))
-		.map(([name, value]) => ({
-			name: name,
-			value: value,
-			enabled: false
-		}));
+	const extendedKeyUsages = $state(
+		Object.entries(x509.ExtendedKeyUsage)
+			.filter((entry) => isNaN(Number(entry[0])))
+			.map(([name, value]) => ({
+				name: name,
+				value: value,
+				enabled: false
+			}))
+	);
+
+	function applyPresetWebserver() {
+		sans = [];
+		sans.push({ type: 'dns', value: '' });
+		keyUsages.forEach((ku) => (ku.enabled = false));
+		keyUsages.find((ku) => ku.name === 'digitalSignature')!.enabled = true;
+		keyUsages.find((ku) => ku.name === 'keyEncipherment')!.enabled = true;
+		extendedKeyUsages.forEach((eku) => (eku.enabled = false));
+		extendedKeyUsages.find((eku) => eku.name === 'serverAuth')!.enabled = true;
+	}
+
+	function applyPresetEmail() {
+		sans = [];
+		sans.push({ type: 'email', value: '' });
+		keyUsages.forEach((ku) => (ku.enabled = false));
+		keyUsages.find((ku) => ku.name === 'digitalSignature')!.enabled = true;
+		keyUsages.find((ku) => ku.name === 'keyEncipherment')!.enabled = true;
+		extendedKeyUsages.forEach((eku) => (eku.enabled = false));
+		extendedKeyUsages.find((eku) => eku.name === 'emailProtection')!.enabled = true;
+	}
 </script>
 
 <div class="root-container">
 	<div class="two-columns">
+		<span>Presets:</span>
+		<div class="presets-container">
+			<button class="preset-button" onclick={applyPresetWebserver}>Webserver</button>
+			<button class="preset-button" onclick={applyPresetEmail}>Email</button>
+		</div>
 		<span>Key Type:</span>
 		<span>
 			<select bind:value={keyAlgorithm}>
@@ -98,14 +127,18 @@
 	<div>
 		<div>Subject Alternative Names:</div>
 		{#each sans as san, index}
-			<div style="padding-block: 0.25rem;">
+			<div style="padding-block-start: 0.5rem;">
 				<select bind:value={san.type}>
 					{#each availableSanTypes as type}
 						<option value={type}>{type}</option>
 					{/each}
 				</select>
 				<input type="text" bind:value={san.value} />
-				<button onclick={() => sans.splice(index, 1)} aria-label="Remove" title="Remove">
+				<button
+					onclick={() => sans.splice(index, 1)}
+					aria-label="Remove"
+					title="Remove"
+					style="padding: 8px 12px;">
 					✖
 				</button>
 			</div>
@@ -151,6 +184,16 @@
 		gap: 1rem;
 		align-items: center;
 		justify-items: start;
+	}
+
+	.presets-container {
+		display: flex;
+		column-gap: 0.5rem;
+	}
+
+	.preset-button {
+		border: none;
+		padding: 8px 12px;
 	}
 
 	.key-usages-container {
